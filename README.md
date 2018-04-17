@@ -1,1 +1,1 @@
-### Various SberTech tutorials and courses 
+### Various SberTech Tutorials and Courses 
