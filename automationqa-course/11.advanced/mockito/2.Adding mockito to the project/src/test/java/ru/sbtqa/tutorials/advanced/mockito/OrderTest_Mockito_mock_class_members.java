@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+/*
+JUnit создаёт для каждого тестового метода новый инстанс класса с тестами.
+См. https://martinfowler.com/bliki/JunitNewInstance.html
+ */
+
 /**
  * Tests for {@code Order} implementation.
  */
