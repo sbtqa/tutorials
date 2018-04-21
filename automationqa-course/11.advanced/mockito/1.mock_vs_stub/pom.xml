@@ -25,7 +25,7 @@
 
     <dependencies>
         <dependency>
-            <!-- Добавление JUnit 5 для использование в тестах -->
+            <!-- Добавление JUnit 5 для использования в тестах -->
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.1.0</version>
