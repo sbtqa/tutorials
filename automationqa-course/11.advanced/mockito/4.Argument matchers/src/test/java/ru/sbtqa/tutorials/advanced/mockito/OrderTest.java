@@ -92,7 +92,6 @@ class OrderTest {
         assertTrue(items.contains(candy));
     }
 
-
     @Test
     void testArgumentMatchersOnVerify() throws InsufficientFundsException {
         Item car = new Item("Car", valueOf(1_000_000));
@@ -104,14 +103,16 @@ class OrderTest {
         order.buyItem(car, account);
 
         // Argument matcher'ы могут использоваться и в блоках verify.
-        // Здесь они чаще всего используются, чтобы не засорять код теста конкретными значениями.
+        // В verify удобно использовать argument matcher'ы, если нужна своя кастомизированная проверка,
+        // с объектом с какими характеристиками вызывался метод (это может быть внутренний объект).
         verify(account).withdraw(ArgumentMatchers.any());
-        verify(promotionService).getGiftsByItem(car);
+        verify(account).withdraw(ArgumentMatchers.argThat((price) -> valueOf(100).compareTo(price) < 0));
+
+        // Проверит на то, что getGiftsByItem был вызван именно с тем же аргументом, что и был передан в buyItem
+        // (проверка на равенство ссылок, а не equals)
+        verify(promotionService).getGiftsByItem(ArgumentMatchers.same(car));
         List<Item> items = order.getItems();
         assertTrue(items.contains(car));
         assertTrue(items.contains(candy));
-
-        // В verify удобно использовать argument matcher'ы, если нужна своя кастомизированная проверка,
-        // с объектом с какими характеристиками вызывался метод (это может быть внутренний объект).
     }
 }
