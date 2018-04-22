@@ -45,7 +45,7 @@ class OrderTest {
         verify(account, Mockito.times(1)).withdraw(car.getPrice());
         // Проверка на то, что если операция withdraw была неуспешной (как в этом тесте), то метод getGiftsByItem не будет вызванё
         verify(promotionService, Mockito.never()).getGiftsByItem(any());
-        // Можно использовать Mockito.verifyZeroInteractions - проверит, что не было вызвов методов мока promotionService
+        // Можно использовать Mockito.verifyZeroInteractions - проверит, что не было вызовов методов мока promotionService
         // Не стоит увлекаться и писать verifyNoMoreInteractions везде.
         // Лучше тест сохранить чистым и красивым, в случае необходимости можно использовать never.
         Mockito.verifyZeroInteractions(promotionService); // == Mockito.verifyNoMoreInteractions(account);
