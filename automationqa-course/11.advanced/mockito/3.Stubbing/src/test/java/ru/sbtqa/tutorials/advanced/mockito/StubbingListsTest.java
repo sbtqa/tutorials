@@ -35,9 +35,7 @@ class StubbingListsTest {
         // Вернётся 2, так как была создана заглушка для вызова метода get cо значением аргумента 1
         assertEquals(Integer.valueOf(2), mockedList.get(1));
         // Будет брошено исключение RuntimeException - была создана соответствующая заглушка
-        assertThrows(RuntimeException.class, () -> {
-            mockedList.get(2);
-        });
+        assertThrows(RuntimeException.class, () -> mockedList.get(2));
         // Вернётся 1000 - для вызова метода size была создана соответствующая заглушка
         assertEquals(1000, mockedList.size());
 
@@ -56,9 +54,7 @@ class StubbingListsTest {
         // Если у метода нет возвращаемого значения (void), то придётся в начале написать doThrow, чтобы реализовать DSL конструкцию
         Mockito.doThrow(new RuntimeException()).when(mockedList).clear();
 
-        assertThrows(RuntimeException.class, () -> {
-            mockedList.clear();
-        });
+        assertThrows(RuntimeException.class, mockedList::clear);
     }
 
     @Test
@@ -98,14 +94,8 @@ class StubbingListsTest {
         // Если возвращаемых значений не останется, то будет возвращаться последнее.
 
         assertEquals(Integer.valueOf(1), mockedList.get(0));
-        assertThrows(RuntimeException.class, () -> {
-            mockedList.get(0);
-        });
-        assertThrows(RuntimeException.class, () -> {
-            mockedList.get(0);
-        });
-        assertThrows(RuntimeException.class, () -> {
-            mockedList.get(0);
-        });
+        assertThrows(RuntimeException.class, () -> mockedList.get(0));
+        assertThrows(RuntimeException.class, () -> mockedList.get(0));
+        assertThrows(RuntimeException.class, () -> mockedList.get(0));
     }
 }
