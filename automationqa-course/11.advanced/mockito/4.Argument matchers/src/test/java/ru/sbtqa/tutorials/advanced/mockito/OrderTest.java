@@ -125,10 +125,14 @@ class OrderTest {
 
         Item cake = new Item("Cake", valueOf(70));
         Item candy = new Item("Candy", valueOf(0));
+
+        // Given
         BDDMockito.given(promotionService.getGiftsByItem(ArgumentMatchers.any())).willReturn(singletonList(candy));
 
+        // When
         order.buyItem(cake, account);
 
+        // Then
         BDDMockito.then(account).should().withdraw(cake.getPrice());
         BDDMockito.then(promotionService).should().getGiftsByItem(cake);
         List<Item> items = order.getItems();
