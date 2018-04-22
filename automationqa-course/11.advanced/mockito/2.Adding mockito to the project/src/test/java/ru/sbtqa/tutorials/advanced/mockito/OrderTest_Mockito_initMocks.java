@@ -3,6 +3,7 @@ package ru.sbtqa.tutorials.advanced.mockito;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -37,12 +38,13 @@ class OrderTest_Mockito_initMocks {
     /**
      * {@code Order} real instance.
      */
+//    @InjectMocks
     private Order order;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        order = new Order(promotionService);
+//        order = new Order(promotionService);
     }
 
     @Test
