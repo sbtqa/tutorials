@@ -2,6 +2,8 @@ package ru.sbtqa.tutorials.advanced.mockito;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
+import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 
 import java.util.List;
 
@@ -115,4 +117,23 @@ class OrderTest {
         assertTrue(items.contains(car));
         assertTrue(items.contains(candy));
     }
+
+    @Test
+    void testCandyForAnyItemBddStyle() throws InsufficientFundsException {
+        // Стандартным mockito'вским when-verify конструкциям есть алиасы для работы в BDD стиле
+        // Перепишем тест testCandyForAnyItem с использованием такого стиля
+
+        Item cake = new Item("Cake", valueOf(70));
+        Item candy = new Item("Candy", valueOf(0));
+        BDDMockito.given(promotionService.getGiftsByItem(ArgumentMatchers.any())).willReturn(singletonList(candy));
+
+        order.buyItem(cake, account);
+
+        BDDMockito.then(account).should().withdraw(cake.getPrice());
+        BDDMockito.then(promotionService).should().getGiftsByItem(cake);
+        List<Item> items = order.getItems();
+        assertTrue(items.contains(cake));
+        assertTrue(items.contains(candy));
+    }
+
 }

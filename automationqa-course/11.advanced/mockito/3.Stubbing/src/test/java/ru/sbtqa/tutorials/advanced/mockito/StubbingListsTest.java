@@ -16,6 +16,7 @@ class StubbingListsTest {
     // В данном контексте SuppressWarnings допустим, но только для unchecked - мы создаём mockedList, который будет хранить только Integer'ы
     @SuppressWarnings("unchecked")
     private final List<Integer> mockedList = Mockito.mock(List.class);
+    // Можно мокать не только интерфейсы, как в этом примере, но и конкретные реализации
 
     @Test
     void testStubbingMethodWithReturnValue() {
