@@ -11,6 +11,8 @@ import static org.mockito.Mockito.verify;
 
 /*
 JUnit создаёт для каждого тестового метода новый инстанс класса с тестами.
+Это не ошибка JUnit, а продуманное решение.
+Основная причина почему это так - необходимость изолированности тестов.
 См. https://martinfowler.com/bliki/JunitNewInstance.html
  */
 

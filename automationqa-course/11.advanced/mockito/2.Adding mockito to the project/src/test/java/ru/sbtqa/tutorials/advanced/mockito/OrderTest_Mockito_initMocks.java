@@ -38,7 +38,7 @@ class OrderTest_Mockito_initMocks {
     /**
      * {@code Order} real instance.
      */
-//    @InjectMocks
+    // @InjectMocks // Не стоит увлекаться с этой аннотацией - всё-таки mockito не DI фрэймворк
     private Order order;
 
     @BeforeEach
