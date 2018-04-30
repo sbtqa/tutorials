@@ -1,26 +1,22 @@
 package ru.sbtqa.tutorials.advanced.mockito;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Integer.valueOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-// До этого момента во всех примерах сопоставление значений переданных аргументов
-// производилось в естественном для Java виде - по equals. Но это не всегда применимо.
-// Например, equals не имеет реализации или он тяжеловесен. Или может нам нужна по каким-то
-// причинам дополнительная гибкость в этом вопросе? Посмотрим в сторону argument matchers.
-// Часто бывает, что чтобы тесты сделать красивыми, лучше реализовать equals, чем использовать
-// свои argument matcher'ы.
-
 /**
- * Tests for {@code Order} implementation.
+ * Spying examples.
  */
 class ArrayListTest {
     private final ArrayList<Integer> arrayList = new ArrayList<>();
@@ -52,6 +48,9 @@ class ArrayListTest {
         when(arrayListSpy.size()).thenReturn(1000);
 
         assertEquals(1000, arrayListSpy.size());
+
+        when(arrayListSpy.size()).thenCallRealMethod();
+        assertEquals(3, arrayListSpy.size());
     }
 
     @Test
@@ -62,9 +61,9 @@ class ArrayListTest {
 
         when(arrayListSpy.get(1)).thenReturn(20);
 
-        assertEquals(Integer.valueOf(1), arrayListSpy.get(0));
-        assertEquals(Integer.valueOf(20), arrayListSpy.get(1));
-        assertEquals(Integer.valueOf(3), arrayListSpy.get(2));
+        assertEquals(valueOf(1), arrayListSpy.get(0));
+        assertEquals(valueOf(20), arrayListSpy.get(1));
+        assertEquals(valueOf(3), arrayListSpy.get(2));
         assertThrows(IndexOutOfBoundsException.class, () -> arrayListSpy.get(3));
         verify(arrayListSpy).add(2);
 
@@ -86,6 +85,6 @@ class ArrayListTest {
         // Вместо этого нужно делать так
         doReturn(20).when(arrayListSpy).get(1);
 
-        assertEquals(Integer.valueOf(20), arrayListSpy.get(1));
+        assertEquals(valueOf(20), arrayListSpy.get(1));
     }
 }

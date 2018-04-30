@@ -2,7 +2,6 @@ package ru.sbtqa.tutorials.advanced.mockito;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
-import org.mockito.Mockito;
 
 import ru.sbtqa.tutorials.advanced.mockito.services.PromotionService;
 
@@ -10,9 +9,16 @@ import static java.math.BigDecimal.valueOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 /**
  * Tests for {@code Order} implementation.
@@ -42,13 +48,13 @@ class OrderTest {
         assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account));
 
         // Mockito.times(1) писать не обязательно - это значение по умолчанию
-        verify(account, Mockito.times(1)).withdraw(car.getPrice());
+        verify(account, times(1)).withdraw(car.getPrice());
         // Проверка на то, что если операция withdraw была неуспешной (как в этом тесте), то метод getGiftsByItem не будет вызванё
-        verify(promotionService, Mockito.never()).getGiftsByItem(any());
+        verify(promotionService, never()).getGiftsByItem(any());
         // Можно использовать Mockito.verifyZeroInteractions - проверит, что не было вызовов методов мока promotionService
         // Не стоит увлекаться и писать verifyNoMoreInteractions везде.
         // Лучше тест сохранить чистым и красивым, в случае необходимости можно использовать never.
-        Mockito.verifyZeroInteractions(promotionService); // == Mockito.verifyNoMoreInteractions(account);
+        verifyZeroInteractions(promotionService); // == Mockito.verifyNoMoreInteractions(account);
         assertTrue(order.getItems().isEmpty());
     }
 
@@ -64,11 +70,11 @@ class OrderTest {
         // buyItem с аргументом cake вызывался 1 раз
         verify(promotionService).getGiftsByItem(cake);
         // buyItem с аргументом cola вызывался 2 раза
-        verify(promotionService, Mockito.times(2)).getGiftsByItem(cola);
+        verify(promotionService, times(2)).getGiftsByItem(cola);
         // Исключительно для примера
-        verify(promotionService, Mockito.atLeastOnce()).getGiftsByItem(any());
-        verify(promotionService, Mockito.atLeast(2)).getGiftsByItem(any());
-        verify(promotionService, Mockito.atMost(3)).getGiftsByItem(any());
+        verify(promotionService, atLeastOnce()).getGiftsByItem(any());
+        verify(promotionService, atLeast(2)).getGiftsByItem(any());
+        verify(promotionService, atMost(3)).getGiftsByItem(any());
     }
 
     @Test
@@ -81,7 +87,7 @@ class OrderTest {
 
         order.buyItem(car, account);
 
-        InOrder inOrder = Mockito.inOrder(account, promotionService);
+        InOrder inOrder = inOrder(account, promotionService);
         inOrder.verify(account).withdraw(car.getPrice());
         inOrder.verify(promotionService).getGiftsByItem(car);
 
