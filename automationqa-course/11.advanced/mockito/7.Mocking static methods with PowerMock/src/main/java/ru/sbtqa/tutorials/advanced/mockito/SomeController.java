@@ -22,7 +22,7 @@ public class SomeController {
      * @return вычисленное значение хэша
      */
     public byte[] calculateHash(byte[] document) throws UnableToCalcHashException {
-        // Инициируем процедуру вычисления хэша, получаем дискриптор
+        // Инициируем процедуру вычисления хэша, получаем хэндл
         long[] handleRef = new long[1];
         int errorCode = hash_open(handleRef);
         if (errorCode != 0) {
@@ -50,7 +50,7 @@ public class SomeController {
             arraycopy(buffer, 0, hash, 0, bufferLength);
             return hash;
         } finally {
-            // Завершаем процедуру вычисления, закрываем открытые ресурсы, освобождаем дескриптор
+            // Завершаем процедуру вычисления, закрываем открытые ресурсы, освобождаем хэндл
             errorCode = hash_close(handle);
             if (errorCode != 0) {
                 System.err.println("Unable to close document hash calculator handle, error code: " + errorCode);
