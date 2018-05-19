@@ -13,7 +13,7 @@ public class CommonFunctions {
         throw new IllegalAccessError("Utility class");
     }
 
-    @Attachment()
+    @Attachment
     public static byte[] getBytes(String resourceName) throws IOException {
         return Files.readAllBytes(Paths.get(RESOURCES, resourceName));
     }

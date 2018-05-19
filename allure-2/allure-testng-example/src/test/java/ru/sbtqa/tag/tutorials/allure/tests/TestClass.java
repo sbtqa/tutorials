@@ -8,6 +8,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.sbtqa.tag.tutorials.allure.steps.Steps;
+import ru.sbtqa.tag.tutorials.allure.utils.CommonFunctions;
 
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
@@ -26,36 +27,37 @@ public class TestClass {
     }
 
     @Test
-    public static void simpleTest() {
+    public static void testDemoConnectionSuccess() {
         Assert.assertTrue(true);
     }
 
     @Test
-    public void simpleTest2() {
+    public void testDemoSteps1() {
         Steps.checkSumStep(3, 2, 5);
         Steps.checkSumStep(5, 4, 9);
     }
 
     @Test
-    public void simpleTest3() {
+    public void testDemoSteps2() {
         Steps.checkSubtractionStep(10, 8, 2);
     }
 
     @Test
-    public void simpleTest4() throws IOException {
-        String darkSouls = "Dark souls 3";
-        Steps.checkStringEqualsStep(darkSouls, darkSouls);
-    }
-
-        @Test
-    public void simpleTest5() throws IOException {
-        Steps.readJsonStep();
+    public void testDemoAttachments1() throws IOException {
+        CommonFunctions.getBytes("picture.jpg");
+        CommonFunctions.getBytes("text.txt");
         Assert.assertTrue(true);
     }
 
-        @Test
-    public void simpleTest6() {
-        Steps.addLinkSber();
+    @Test
+    public void testDemoAttachments2() throws IOException {
+        CommonFunctions.getBytesAnnotationWithArgs("json.json");
+        Assert.assertTrue(true);
+    }
+
+    @Test
+    public void testDemoAttachments3() {
+        Allure.addAttachment("Ссылка", "text/plain", "http://sberbank.ru");
         Assert.assertTrue(true);
     }
 
@@ -64,13 +66,13 @@ public class TestClass {
      */
     @Test
     @Description(useJavaDoc = true)
-    public void simpleTest7() {
+    public void testDemoDescriptionAnnotation1() {
         Assert.assertTrue(1 == 1);
     }
 
-//    @Test
+    @Test
     @Description(value = "Тест проверяет эквивалентность единицы единице")
-    public void simpleTest7_1() {
+    public void testDemoDescriptionAnnotation2() {
         Assert.assertTrue(1 == 1);
     }
 
@@ -78,7 +80,7 @@ public class TestClass {
     @Feature(value = "Простые математические операции")
     @Story(value = "Сложение")
     @Test
-    public void sumTest() {
+    public void testDemoFunctionalAnnotations1() {
         Steps.checkSummationStep(5, 4, 9);
     }
 
@@ -86,7 +88,7 @@ public class TestClass {
     @Feature(value = "Простые математические операции")
     @Story(value = "Вычитание")
     @Test
-    public void subTest() {
+    public void testDemoFunctionalAnnotations2() {
         Steps.checkSubtractionStep(8, 2, 6);
     }
 
@@ -94,13 +96,13 @@ public class TestClass {
     @Features(value = {@Feature(value = "Тригонометрия"), @Feature(value = "Простые математические операции")})
     @Stories(value = {@Story(value = "Синус"), @Story(value = "Синусоида")})
     @Test
-    public void checkSinTest() {
+    public void testDemoFunctionalAnnotations3() {
         Steps.checkSinStep(0, 0);
     }
 
     @Test
     @Flaky
-    public void testDemoFlaky() {
+    public void testDemoFlakyAnnotation() {
         int randomNum = ThreadLocalRandom.current().nextInt(0, 2);
         if (randomNum == 0) {
             Assert.assertTrue(true);
@@ -111,66 +113,59 @@ public class TestClass {
 
     @Test
     @Issue(value = "FGY-4627")
-    @TmsLink(value = "TL-135")
-    public void simpleTest15() {
-        Assert.assertTrue(1 == 1);
+    public void testDemoIssueAnnotation() {
+        Assert.assertTrue(1 + 2 == 4);
     }
 
-        @Test
+    @Test
     @TmsLink(value = "TL-678")
-    public void simpleTest18() {
+    public void testDemoTmsLinkAnnotation() {
         Assert.assertTrue(1 == 1);
     }
 
     @Test
     @Link(name = "Ссылка", url = "http://yandex.ru")
-    public void checkSubtractionWithLinkTest() {
+    public void testDemoLinkAnnotation() {
         Steps.checkSubtractionStep(15, 5, 10);
     }
 
     @Test
     @Links(value = {@Link(name = "Ссылка1", url = "http://sberbank.ru"),
             @Link(name = "Ссылка2", url = "http://yandex.ru")})
-    public void checkSubtractionWithLinksTest() {
+    public void testDemoLinksAnnotation() {
         Steps.checkSubtractionStep(14, 5, 9);
     }
 
     //Демонстрация работы категорий. Product defects
     @Test
-    public void sumTestFailed() {
+    public void testDemoCategories1() {
         //какие-то проверки, в результате которых тест может упасть
         Steps.checkSumStep(5, 6, 4);
     }
 
     //Демонстрация работы категорий. Test defects. traceRegex
     @Test
-    public void testFailedNullPointerException() {
+    public void testDemoCategories2() {
         //какие-то проверки, которые могут вызывать NullPointerException
         throw new NullPointerException();
     }
 
     //Демонстрация работы категорий. Test defects. messageRegex
     @Test
-    public void testFailedException() throws Exception {
+    public void testDemoCategories3() throws Exception {
         //какие-то проверки, которые могут вызывать Exception
         throw new Exception("что-то пошло не так");
     }
 
     @Test
     @Owner(value = "Пупкин Валерий Иванович")
-    public void testDemoOwner() {
+    public void testDemoOwnerAnnotation() {
         Steps.checkSumStep(1, 2, 3);
     }
 
     @Test
-    @Muted
-    public void testDemoMuted() {
-        Steps.checkSubtractionStep(7, 2, 4);
-    }
-
-    @Test
     @Severity(value = SeverityLevel.BLOCKER)
-    public void testDemoSeverity() {
+    public void testDemoSeverityAnnotation() {
         Steps.checkSubtractionStep(6, 1, 5);
     }
 }
