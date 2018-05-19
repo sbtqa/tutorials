@@ -1,4 +1,4 @@
-package ru.sbtqa.tag.tutorials.allure.utils;
+package ru.sbtqa.tag.tutorials.allure;
 
 import io.qameta.allure.Attachment;
 
@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class CommonFunctions {
-    private static final String RESOURCES = "src/main/resources";
+    private static final String RESOURCES = "src/test/resources/attachments";
 
     private CommonFunctions() {
         throw new IllegalAccessError("Utility class");

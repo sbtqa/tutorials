@@ -1,9 +1,8 @@
-package ru.sbtqa.tag.tutorials.allure.steps;
+package ru.sbtqa.tag.tutorials.allure;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.testng.Assert;
-import ru.sbtqa.tag.tutorials.allure.utils.CommonFunctions;
 
 import java.io.IOException;
 
@@ -27,13 +26,13 @@ public class Steps {
     @Step(value = "Проверка эквивалентности строки {str1} строке {str2}")
     public static void checkStringEqualsStep(String str1, String str2) throws IOException {
         Assert.assertTrue(str1.equals(str2), "Строки не эквивалентны");
-        CommonFunctions.getBytes("picture.jpg");
-        CommonFunctions.getBytes("text.txt");
+        CommonFunctions.getBytes("attachments/picture.jpg");
+        CommonFunctions.getBytes("attachments/text.txt");
     }
 
     @Step(value = "Зачитать джейсон")
     public static void readJsonStep() throws IOException {
-        CommonFunctions.getBytesAnnotationWithArgs("json.json");
+        CommonFunctions.getBytesAnnotationWithArgs("attachments/json.json");
     }
 
     @Step(value = "Добавить ссылку на Сбербанк")
