@@ -14,11 +14,6 @@ import java.util.concurrent.ThreadLocalRandom;
 class TestClass {
     private static final Logger LOG = LoggerFactory.getLogger(TestClass.class);
 
-    @Test
-    void testDemoConnectionSuccess() {
-        Assertions.assertTrue(true);
-    }
-
     @BeforeEach
     void beforeTest() {
         LOG.info("Тест стартует!");
@@ -27,6 +22,11 @@ class TestClass {
     @AfterEach
     void afterTest() {
         LOG.info("Тест завершен!");
+    }
+
+    @Test
+    void testDemoConnectionSuccess() {
+        Assertions.assertTrue(true);
     }
 
     @Test

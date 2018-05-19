@@ -16,7 +16,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
         <junit-jupiter-engine.version>5.1.0</junit-jupiter-engine.version>
-        <junit-platform-surefire-provider.version>1.1.0</junit-platform-surefire-provider.version>
+        <junit-platform-surefire-provider.version>1.2.0</junit-platform-surefire-provider.version>
         <aspectj.version>1.8.10</aspectj.version>
         <allure-junit5.version>2.6.0</allure-junit5.version>
     </properties>
