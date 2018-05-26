@@ -47,9 +47,12 @@ class OrderTest_Mockito_JUnitExtendWith {
     @Test
     void testSucceedIfEnoughFunds() throws InsufficientFundsException {
         Item cake = new Item("Cake", valueOf(70));
+
         order.buyItem(cake, account);
+
         verify(account).withdraw(cake.getPrice());
         verify(promotionService).getGiftsByItem(cake);
-        assertTrue(order.getItems().contains(cake));
+        assertTrue(order.getItems().contains(cake)
+                , "Пирожное добавлено в список приобретённых товаров");
     }
 }

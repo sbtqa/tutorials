@@ -58,8 +58,10 @@ class OrderTest {
         verify(account).withdraw(cake.getPrice());
         verify(promotionService).getGiftsByItem(cake);
         List<Item> items = order.getItems();
-        assertTrue(items.contains(cake));
-        assertTrue(items.contains(candy));
+        assertTrue(items.contains(cake)
+                , "Пирожное добавлено в список приобретённых товаров");
+        assertTrue(items.contains(candy)
+                , "Подарок добавлен в список приобретённых товаров");
     }
 
     @Test
@@ -75,8 +77,10 @@ class OrderTest {
         verify(account).withdraw(cake.getPrice());
         verify(promotionService).getGiftsByItem(cake);
         List<Item> items = order.getItems();
-        assertTrue(items.contains(cake));
-        assertFalse(items.contains(candy));
+        assertTrue(items.contains(cake)
+                , "Пирожное добавлено в список приобретённых товаров");
+        assertFalse(items.contains(candy)
+                , "Подарок не был добавлен в список приобретённых товаров");
     }
 
     @Test
@@ -92,8 +96,10 @@ class OrderTest {
         verify(account).withdraw(car.getPrice());
         verify(promotionService).getGiftsByItem(car);
         List<Item> items = order.getItems();
-        assertTrue(items.contains(car));
-        assertTrue(items.contains(candy));
+        assertTrue(items.contains(car)
+                , "Автомобиль добавлен в список приобретённых товаров");
+        assertTrue(items.contains(candy)
+                , "Подарок добавлен в список приобретённых товаров");
     }
 
     @Test
@@ -116,8 +122,10 @@ class OrderTest {
         // (проверка на равенство ссылок, а не equals)
         verify(promotionService).getGiftsByItem(ArgumentMatchers.same(car));
         List<Item> items = order.getItems();
-        assertTrue(items.contains(car));
-        assertTrue(items.contains(candy));
+        assertTrue(items.contains(car)
+                , "Автомобиль добавлен в список приобретённых товаров");
+        assertTrue(items.contains(candy)
+                , "Подарок добавлен в список приобретённых товаров");
     }
 
     @Test
@@ -126,10 +134,9 @@ class OrderTest {
         // Перепишем тест testCandyForAnyItem с использованием такого стиля.
         // BDDMockito - это хорошо, но большинство уже привыкли к стандартному DSL от mockito.
 
+        // Given
         Item cake = new Item("Cake", valueOf(70));
         Item candy = new Item("Candy", valueOf(0));
-
-        // Given
         given(promotionService.getGiftsByItem(any())).willReturn(singletonList(candy));
 
         // When
@@ -139,8 +146,10 @@ class OrderTest {
         then(account).should().withdraw(cake.getPrice());
         then(promotionService).should().getGiftsByItem(cake);
         List<Item> items = order.getItems();
-        assertTrue(items.contains(cake));
-        assertTrue(items.contains(candy));
+        assertTrue(items.contains(cake)
+                , "Пирожное добавлено в список приобретённых товаров");
+        assertTrue(items.contains(candy)
+                , "Подарок добавлен в список приобретённых товаров");
     }
 
 }

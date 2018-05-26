@@ -45,7 +45,8 @@ class OrderTest {
         // Если будет вызван метод withdraw с любым значением аргумента, то бросить исключение InsufficientFundsException
         doThrow(InsufficientFundsException.class).when(account).withdraw(any());
 
-        assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account));
+        assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account)
+                , "Брошено исключение InsufficientFundsException, так как средств на счёте недостаточно для покупки машины");
 
         // Mockito.times(1) писать не обязательно - это значение по умолчанию
         verify(account, times(1)).withdraw(car.getPrice());
@@ -55,7 +56,8 @@ class OrderTest {
         // Не стоит увлекаться и писать verifyNoMoreInteractions везде.
         // Лучше тест сохранить чистым и красивым, в случае необходимости можно использовать never.
         verifyZeroInteractions(promotionService); // == Mockito.verifyNoMoreInteractions(account);
-        assertTrue(order.getItems().isEmpty());
+        assertTrue(order.getItems().isEmpty()
+                , "Список приобретённых товаров остался пустым");
     }
 
     @Test

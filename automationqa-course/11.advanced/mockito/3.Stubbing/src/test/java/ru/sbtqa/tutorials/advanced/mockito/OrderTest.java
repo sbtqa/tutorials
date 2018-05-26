@@ -46,7 +46,9 @@ class OrderTest {
         verify(account).withdraw(cake.getPrice());
         verify(promotionService).getGiftsByItem(cake);
         List<Item> items = order.getItems();
-        assertTrue(items.contains(cake));
-        assertTrue(items.contains(candy));
+        assertTrue(items.contains(cake)
+                , "Пирожное добавлено в список приобретённых товаров");
+        assertTrue(items.contains(candy)
+                , "Подарок добавлен в список приобретённых товаров");
     }
 }

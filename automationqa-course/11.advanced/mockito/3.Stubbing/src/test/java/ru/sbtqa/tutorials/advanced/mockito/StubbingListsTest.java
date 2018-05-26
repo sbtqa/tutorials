@@ -6,6 +6,8 @@ import java.util.List;
 
 import static java.lang.Integer.valueOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doThrow;
@@ -35,23 +37,23 @@ class StubbingListsTest {
         // Assert'ы здесь с точки зрения простого отображения ожидаемого и фактического результата, так как проверять mockito не является нашей целью
         // Не путайте в assert'ах местами значения - обратите внимание, слева expected, справа actual.
 
-        // Вернётся 1, так как была создана заглушка для вызова метода get cо значением аргумента 0
-        assertEquals(valueOf(1), mockedList.get(0));
-        // Вернётся 2, так как была создана заглушка для вызова метода get cо значением аргумента 1
-        assertEquals(valueOf(2), mockedList.get(1));
-        // Будет брошено исключение RuntimeException - была создана соответствующая заглушка
-        assertThrows(RuntimeException.class, () -> mockedList.get(2));
-        // Вернётся 1000 - для вызова метода size была создана соответствующая заглушка
-        assertEquals(1000, mockedList.size());
+        assertEquals(valueOf(1), mockedList.get(0)
+                , "Возвращено значение заглушки для вызова метода get cо значением аргумента 0");
+        assertEquals(valueOf(2), mockedList.get(1)
+                , "Возвращено значение заглушки для вызова метода get cо значением аргумента 1");
+        assertThrows(RuntimeException.class, () -> mockedList.get(2)
+                , "Брошено исключение RuntimeException, которое запрограммировано для вызова метода get cо значением аргумента 2");
+        assertEquals(1000, mockedList.size()
+                , "Возвращено значение заглушки для вызова метода size");
 
-        // Не был задан стаб для элемента с 3-м индексом - вернётся null, так как возвращаемый тип этого метода - ссылка
-        assertEquals(null, mockedList.get(3));
-        // Метод isEmpty без заглушки - вернётся false, так как возвращаемый тип этого метода - boolean
-        assertEquals(false, mockedList.isEmpty());
-        // Метод lastIndexOf без заглушки - вернётся 0, так как возвращаемый тип этого метода - int
-        assertEquals(0, mockedList.lastIndexOf(2));
-        // В случае, когда возвращается коллекция, будет возвращён не null, а пустая коллекция
-        assertTrue(mockedList.subList(0, 1).isEmpty());
+        assertNull(mockedList.get(3)
+                , "Не был задан стаб для элемента с 3-м индексом - вернётся null, так как возвращаемый тип этого метода - ссылка");
+        assertFalse(mockedList.isEmpty()
+                , "Метод isEmpty без заглушки - вернётся false, так как возвращаемый тип этого метода - boolean");
+        assertEquals(0, mockedList.lastIndexOf(2)
+                , "Метод lastIndexOf без заглушки - вернётся 0, так как возвращаемый тип этого метода - int");
+        assertTrue(mockedList.subList(0, 1).isEmpty()
+                , "В случае, когда возвращается коллекция, будет возвращён не null, а пустая коллекция");
     }
 
     @Test
