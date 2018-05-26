@@ -37,17 +37,26 @@ class OrderTestStateVerification {
     @Test
     void testSucceededIfEnoughFunds() throws InsufficientFundsException {
         Item cake = new Item("Cake", valueOf(70));
+
         order.buyItem(cake, account);
-        assertEquals(valueOf(30), account.getBalance());
-        assertTrue(order.getItems().contains(cake));
+
+        assertEquals(valueOf(30), account.getBalance()
+                , "Баланс уменьшился на сумму покупки");
+        assertTrue(order.getItems().contains(cake)
+                , "Пирожное добавлено в список приобретённых товаров");
     }
 
     @Test
     void testFailedIfInsufficientFunds() {
         Item car = new Item("Car", valueOf(1_000_000));
-        assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account));
-        assertEquals(valueOf(100), account.getBalance());
-        assertTrue(order.getItems().isEmpty());
+
+        assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account)
+                , "Брошено исключение InsufficientFundsException, так как средств на счёте недостаточно для покупки машины");
+
+        assertEquals(valueOf(100), account.getBalance()
+                , "Баланс не изменился, так как покупка не совершена");
+        assertTrue(order.getItems().isEmpty()
+                , "Список приобретённых товаров остался пустым");
     }
 }
 
@@ -73,20 +82,26 @@ class OrderTestBehaviourVerification {
     @Test
     void testSucceedIfEnoughFunds() throws InsufficientFundsException {
         Item cake = new Item("Cake", valueOf(70));
-        order.buyItem(cake, account);
-        verify(account).withdraw(cake.getPrice());
-        assertTrue(order.getItems().contains(cake));
-        assertTrue(promotionServiceSpy.getGiftsByItemCalled);
 
+        order.buyItem(cake, account);
+
+        verify(account).withdraw(cake.getPrice());
+        assertTrue(order.getItems().contains(cake)
+                , "Пирожное добавлено в список приобретённых товаров");
+        assertTrue(promotionServiceSpy.getGiftsByItemCalled, "Метод getGiftsByItem вызван");
     }
 
     @Test
     void testFailIfInsufficientFunds() throws InsufficientFundsException {
         Item car = new Item("Car", valueOf(1_000_000));
         doThrow(InsufficientFundsException.class).when(account).withdraw(car.getPrice());
-        assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account));
+
+        assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account)
+                , "Брошено исключение InsufficientFundsException, так как средств на счёте недостаточно для покупки машины");
+
         verify(account).withdraw(car.getPrice());
-        assertTrue(order.getItems().isEmpty());
+        assertTrue(order.getItems().isEmpty()
+                , "Список приобретённых товаров остался пустым");
     }
 }
 
