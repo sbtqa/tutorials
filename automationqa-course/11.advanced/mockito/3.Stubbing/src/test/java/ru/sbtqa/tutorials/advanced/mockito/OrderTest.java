@@ -34,6 +34,18 @@ class OrderTest {
 
     @Test
     void testSucceedIfEnoughFunds() throws InsufficientFundsException {
+        Item cake = new Item("Cake", valueOf(70));
+
+        order.buyItem(cake, account);
+
+        verify(account).withdraw(cake.getPrice());
+        verify(promotionService).getGiftsByItem(cake);
+        assertTrue(order.getItems().contains(cake)
+                , "Пирожное добавлено в список приобретённых товаров");
+    }
+
+    @Test
+    void testGiftsAddedToOrderItems() throws InsufficientFundsException {
         // Если вернуться к примеру с заказом, то напишем заглушку, которая всегда возвращает
         // объект candy для всех, кто купил cake.
 
@@ -43,7 +55,6 @@ class OrderTest {
 
         order.buyItem(cake, account);
 
-        verify(account).withdraw(cake.getPrice());
         verify(promotionService).getGiftsByItem(cake);
         List<Item> items = order.getItems();
         assertTrue(items.contains(cake)
