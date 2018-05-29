@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import ru.sbtqa.tutorials.advanced.mockito.services.PromotionService;
 
 import static java.math.BigDecimal.valueOf;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -47,9 +48,10 @@ class OrderTest_Mockito_mock_BeforeEach {
 
         order.buyItem(cake, account);
 
-        verify(account).withdraw(cake.getPrice());
-        verify(promotionService).getGiftsByItem(cake);
-        assertTrue(order.getItems().contains(cake)
-                , "Пирожное добавлено в список приобретённых товаров");
+        assertAll(
+                () -> verify(account).withdraw(cake.getPrice()),
+                () -> verify(promotionService).getGiftsByItem(cake),
+                () -> assertTrue(order.getItems().contains(cake), "Товар добавлен в список приобретённых")
+        );
     }
 }

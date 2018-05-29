@@ -9,6 +9,7 @@ import ru.sbtqa.tutorials.advanced.mockito.services.PromotionService;
 
 import static java.math.BigDecimal.valueOf;
 import static java.util.Collections.emptyList;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,10 +41,10 @@ class OrderTestStateVerification {
 
         order.buyItem(cake, account);
 
-        assertEquals(valueOf(30), account.getBalance()
-                , "Баланс уменьшился на сумму покупки");
-        assertTrue(order.getItems().contains(cake)
-                , "Пирожное добавлено в список приобретённых товаров");
+        assertAll(
+                () -> assertEquals(valueOf(30), account.getBalance(), "Баланс уменьшился на сумму покупки"),
+                () -> assertTrue(order.getItems().contains(cake), "Товар добавлен в список приобретённых")
+        );
     }
 
     @Test
@@ -52,11 +53,10 @@ class OrderTestStateVerification {
 
         assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account)
                 , "Брошено исключение InsufficientFundsException, так как средств на счёте недостаточно для покупки машины");
-
-        assertEquals(valueOf(100), account.getBalance()
-                , "Баланс не изменился, так как покупка не совершена");
-        assertTrue(order.getItems().isEmpty()
-                , "Список приобретённых товаров остался пустым");
+        assertAll("Покупка не совершена, состояние объектов не изменилось",
+                () -> assertEquals(valueOf(100), account.getBalance()),
+                () -> assertTrue(order.getItems().isEmpty())
+        );
     }
 }
 
@@ -85,10 +85,10 @@ class OrderTestBehaviourVerification {
 
         order.buyItem(cake, account);
 
-        verify(account).withdraw(cake.getPrice());
-        assertTrue(order.getItems().contains(cake)
-                , "Пирожное добавлено в список приобретённых товаров");
-        assertTrue(promotionServiceSpy.getGiftsByItemCalled, "Метод getGiftsByItem вызван");
+        assertAll(
+                () -> assertTrue(order.getItems().contains(cake), "Товар добавлен в список приобретённых"),
+                () -> assertTrue(promotionServiceSpy.getGiftsByItemCalled, "Метод getGiftsByItem вызван")
+        );
     }
 
     @Test
@@ -98,10 +98,10 @@ class OrderTestBehaviourVerification {
 
         assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account)
                 , "Брошено исключение InsufficientFundsException, так как средств на счёте недостаточно для покупки машины");
-
-        verify(account).withdraw(car.getPrice());
-        assertTrue(order.getItems().isEmpty()
-                , "Список приобретённых товаров остался пустым");
+        assertAll(
+                () -> verify(account).withdraw(car.getPrice()),
+                () -> assertTrue(order.getItems().isEmpty(), "Список приобретённых товаров остался пустым")
+        );
     }
 }
 

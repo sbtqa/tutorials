@@ -8,6 +8,7 @@ import ru.sbtqa.tutorials.advanced.mockito.services.PromotionService;
 
 import static java.math.BigDecimal.valueOf;
 import static java.util.Collections.singletonList;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -38,10 +39,11 @@ class OrderTest {
 
         order.buyItem(cake, account);
 
-        verify(account).withdraw(cake.getPrice());
-        verify(promotionService).getGiftsByItem(cake);
-        assertTrue(order.getItems().contains(cake)
-                , "Пирожное добавлено в список приобретённых товаров");
+        assertAll(
+                () -> verify(account).withdraw(cake.getPrice()),
+                () -> verify(promotionService).getGiftsByItem(cake),
+                () -> assertTrue(order.getItems().contains(cake), "Товар добавлен в список приобретённых")
+        );
     }
 
     @Test
@@ -55,11 +57,11 @@ class OrderTest {
 
         order.buyItem(cake, account);
 
-        verify(promotionService).getGiftsByItem(cake);
         List<Item> items = order.getItems();
-        assertTrue(items.contains(cake)
-                , "Пирожное добавлено в список приобретённых товаров");
-        assertTrue(items.contains(candy)
-                , "Подарок добавлен в список приобретённых товаров");
+        assertAll(
+                () -> verify(promotionService).getGiftsByItem(cake),
+                () -> assertTrue(items.contains(cake), "Товар добавлен в список приобретённых"),
+                () -> assertTrue(items.contains(candy), "Подарок добавлен в список приобретённых товаров")
+        );
     }
 }

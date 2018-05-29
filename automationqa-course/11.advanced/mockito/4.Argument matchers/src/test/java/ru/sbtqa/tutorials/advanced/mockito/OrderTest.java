@@ -1,7 +1,6 @@
 package ru.sbtqa.tutorials.advanced.mockito;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 
 import java.util.List;
 
@@ -9,10 +8,12 @@ import ru.sbtqa.tutorials.advanced.mockito.services.PromotionService;
 
 import static java.math.BigDecimal.valueOf;
 import static java.util.Collections.singletonList;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
@@ -55,13 +56,12 @@ class OrderTest {
 
         order.buyItem(cake, account);
 
-        verify(account).withdraw(cake.getPrice());
-        verify(promotionService).getGiftsByItem(cake);
         List<Item> items = order.getItems();
-        assertTrue(items.contains(cake)
-                , "Пирожное добавлено в список приобретённых товаров");
-        assertTrue(items.contains(candy)
-                , "Подарок добавлен в список приобретённых товаров");
+        assertAll(
+                () -> verify(promotionService).getGiftsByItem(cake),
+                () -> assertTrue(items.contains(cake), "Приобретаемый товар добавлен в список приобретённых"),
+                () -> assertTrue(items.contains(candy), "Подарок добавлен в список приобретённых товаров")
+        );
     }
 
     @Test
@@ -74,13 +74,12 @@ class OrderTest {
 
         order.buyItem(cake, account);
 
-        verify(account).withdraw(cake.getPrice());
-        verify(promotionService).getGiftsByItem(cake);
         List<Item> items = order.getItems();
-        assertTrue(items.contains(cake)
-                , "Пирожное добавлено в список приобретённых товаров");
-        assertFalse(items.contains(candy)
-                , "Подарок не был добавлен в список приобретённых товаров");
+        assertAll(
+                () -> verify(promotionService).getGiftsByItem(cake),
+                () -> assertTrue(items.contains(cake), "Приобретаемый товар добавлен в список приобретённых"),
+                () -> assertFalse(items.contains(candy), "Подарок не добавлен в список приобретённых товаров")
+        );
     }
 
     @Test
@@ -93,13 +92,12 @@ class OrderTest {
 
         order.buyItem(car, account);
 
-        verify(account).withdraw(car.getPrice());
-        verify(promotionService).getGiftsByItem(car);
         List<Item> items = order.getItems();
-        assertTrue(items.contains(car)
-                , "Автомобиль добавлен в список приобретённых товаров");
-        assertTrue(items.contains(candy)
-                , "Подарок добавлен в список приобретённых товаров");
+        assertAll(
+                () -> verify(promotionService).getGiftsByItem(car),
+                () -> assertTrue(items.contains(car), "Автомобиль добавлен в список приобретённых товаров"),
+                () -> assertTrue(items.contains(candy), "Подарок добавлен в список приобретённых товаров")
+        );
     }
 
     @Test
@@ -115,17 +113,19 @@ class OrderTest {
         // Argument matcher'ы могут использоваться и в блоках verify.
         // В verify удобно использовать argument matcher'ы, если нужна своя кастомизированная проверка,
         // с объектом с какими характеристиками вызывался метод (это может быть внутренний объект).
-        verify(account).withdraw(any());
-        verify(account).withdraw(argThat((price) -> valueOf(100).compareTo(price) < 0));
 
-        // Проверит на то, что getGiftsByItem был вызван именно с тем же аргументом, что и был передан в buyItem
-        // (проверка на равенство ссылок, а не equals)
-        verify(promotionService).getGiftsByItem(ArgumentMatchers.same(car));
         List<Item> items = order.getItems();
-        assertTrue(items.contains(car)
-                , "Автомобиль добавлен в список приобретённых товаров");
-        assertTrue(items.contains(candy)
-                , "Подарок добавлен в список приобретённых товаров");
+        assertAll(
+                () -> verify(account).withdraw(any()),
+                () -> verify(account).withdraw(argThat((price) -> valueOf(100).compareTo(price) < 0)),
+
+                // Проверит на то, что getGiftsByItem был вызван именно с тем же аргументом, что и был передан в buyItem
+                // (проверка на равенство ссылок, а не equals)
+                () -> verify(promotionService).getGiftsByItem(same(car)),
+
+                () -> assertTrue(items.contains(car), "Автомобиль добавлен в список приобретённых товаров"),
+                () -> assertTrue(items.contains(candy), "Подарок добавлен в список приобретённых товаров")
+        );
     }
 
     @Test
@@ -143,13 +143,11 @@ class OrderTest {
         order.buyItem(cake, account);
 
         // Then
-        then(account).should().withdraw(cake.getPrice());
-        then(promotionService).should().getGiftsByItem(cake);
         List<Item> items = order.getItems();
-        assertTrue(items.contains(cake)
-                , "Пирожное добавлено в список приобретённых товаров");
-        assertTrue(items.contains(candy)
-                , "Подарок добавлен в список приобретённых товаров");
+        assertAll(
+                () -> then(promotionService).should().getGiftsByItem(cake),
+                () -> assertTrue(items.contains(cake), "Пирожное добавлено в список приобретённых товаров"),
+                () -> assertTrue(items.contains(candy), "Подарок добавлен в список приобретённых товаров")
+        );
     }
-
 }
