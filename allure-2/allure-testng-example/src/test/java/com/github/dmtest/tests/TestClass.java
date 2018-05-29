@@ -111,12 +111,12 @@ public class TestClass {
 
     @Test
     @Issue(value = "FGY-4627")
-    @TmsLink(value = "TL-135")
+    @TmsLinks({@TmsLink(value = "TL-135"), @TmsLink(value = "TL-158")})
     public void simpleTest15() {
         Assert.assertTrue(1 == 1);
     }
 
-        @Test
+    @Test
     @TmsLink(value = "TL-678")
     public void simpleTest18() {
         Assert.assertTrue(1 == 1);
