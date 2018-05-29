@@ -111,6 +111,7 @@ public class TestClass {
 
     @Test
     @Issue(value = "FGY-4627")
+    @TmsLinks({@TmsLink(value = "TL-135"), @TmsLink(value = "TL-158")})
     public void testDemoIssueAnnotation() {
         Assert.assertTrue(1 + 2 == 4);
     }
