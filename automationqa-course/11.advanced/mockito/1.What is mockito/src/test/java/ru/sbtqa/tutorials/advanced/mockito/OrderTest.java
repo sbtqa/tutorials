@@ -50,12 +50,13 @@ class OrderTestStateVerification {
     @Test
     void testFailedIfInsufficientFunds() {
         Item car = new Item("Car", valueOf(1_000_000));
-
-        assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account)
-                , "Брошено исключение InsufficientFundsException, так как средств на счёте недостаточно для покупки машины");
-        assertAll("Покупка не совершена, состояние объектов не изменилось",
-                () -> assertEquals(valueOf(100), account.getBalance()),
-                () -> assertTrue(order.getItems().isEmpty())
+        assertAll(
+                () -> assertThrows(InsufficientFundsException.class,
+                        () -> order.buyItem(car, account), "Брошено исключение InsufficientFundsException, так как средств на счёте недостаточно для покупки машины"),
+                () -> assertAll("Покупка не совершена, состояние объектов не изменилось",
+                        () -> assertEquals(valueOf(100), account.getBalance()),
+                        () -> assertTrue(order.getItems().isEmpty())
+                )
         );
     }
 }
@@ -86,6 +87,7 @@ class OrderTestBehaviourVerification {
         order.buyItem(cake, account);
 
         assertAll(
+                () -> verify(account).withdraw(cake.getPrice()),
                 () -> assertTrue(order.getItems().contains(cake), "Товар добавлен в список приобретённых"),
                 () -> assertTrue(promotionServiceSpy.getGiftsByItemCalled, "Метод getGiftsByItem вызван")
         );
@@ -96,11 +98,13 @@ class OrderTestBehaviourVerification {
         Item car = new Item("Car", valueOf(1_000_000));
         doThrow(InsufficientFundsException.class).when(account).withdraw(car.getPrice());
 
-        assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account)
-                , "Брошено исключение InsufficientFundsException, так как средств на счёте недостаточно для покупки машины");
         assertAll(
-                () -> verify(account).withdraw(car.getPrice()),
-                () -> assertTrue(order.getItems().isEmpty(), "Список приобретённых товаров остался пустым")
+                () -> assertThrows(InsufficientFundsException.class, () -> order.buyItem(car, account)
+                        , "Брошено исключение InsufficientFundsException, так как средств на счёте недостаточно для покупки машины"),
+                () -> assertAll(
+                        () -> verify(account).withdraw(car.getPrice()),
+                        () -> assertTrue(order.getItems().isEmpty(), "Список приобретённых товаров остался пустым")
+                )
         );
     }
 }
