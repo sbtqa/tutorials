@@ -1,7 +1,6 @@
 package ru.sbtqa.tutorials.advanced.mockito;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.List;
 import static java.lang.Integer.valueOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
