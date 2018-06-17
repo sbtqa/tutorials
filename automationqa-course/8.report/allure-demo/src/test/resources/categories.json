@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Некорректный URL",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*Cannot navigate to invalid URL.*"
+  },
+  {
+    "name": "Устаревший xpath",
+    "matchedStatuses": ["broken"],
+    "traceRegex": ".*NoSuchElementException.*"
+  }
+]
