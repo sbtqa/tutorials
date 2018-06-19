@@ -7,17 +7,19 @@ import static org.hamcrest.Matchers.*;
 
 
 /**
- * Примеры использования стандартных матчеров
+ * Примеры использования стандартных матчеров библиотеки Hamcrest
  */
 class CoreMatchersTest {
 
     private String efsName = "ЕФС - Единая Фронтальная Система";
 
-    /*  ===================
-     *  ЛОГИЧЕСКИЕ МАТЧЕРЫ
-     * ===================/
-
     /*
+     * ====================
+     * ЛОГИЧЕСКИЕ МАТЧЕРЫ
+     * ====================
+     */
+
+    /**
      * efsName - объект, который проверяем. allOf - это логический матчер библиотеки Hamcrest,
      * который принимает цепочку матчеров и ждет, что каждый будет выполнен успешно
      */
@@ -62,15 +64,17 @@ class CoreMatchersTest {
     }
 
 
-    /* ======================
+    /*
+     * ======================
      * СИНТАКСИЧЕСКИЕ МАТЧЕРЫ
-     * ======================/
+     * ======================
+     */
 
     /**
      * Использование матчера is, который влияет только на читабельность кода.ё
      * Hamcrest strives to make your tests as readable as possible.
      * For example, the is matcher is a wrapper that doesn't add any extra behavior to the underlying matcher.
-     *
+     * <p>
      * Все три утверждения эквивалентны - см. ниже
      */
     @Test
@@ -80,19 +84,60 @@ class CoreMatchersTest {
         assertThat("ППРБ", is(("ППРБ")));
     }
 
-    /* =====================================
-     * МАТЧЕРЫ ПРОВЕРКИ СВОЙСТВ POJO КЛАССОВ
-     * =====================================/
-
-
-
-       /**
-        * Используем матчер anything(), который всегда отрабатывает успешно
-        */
+    /**
+     * Используем матчер anything(), который всегда отрабатывает успешно
+     */
     @Test
     void shouldWorkHamcrestMatcherAnyThing() {
         assertThat(efsName, anything());
     }
 
 
+    /* =====================================
+     * МАТЧЕРЫ ПРОВЕРКИ СВОЙСТВ POJO-КЛАССОВ
+     * =====================================
+     *
+     * Рекомендуемая библиотека, которая расширяет возможности работы с Beans:
+     * github.com/sandromancuso/bean-property-matcher
+     */
+
+    /**
+     * Проверяем свойство класса {@link PojoBean}
+     */
+    @Test
+    void shouldWorkHamcrestHasProperty() {
+        PojoBean pojoBean = new PojoBean("Artem", 29);
+        assertThat(pojoBean, allOf(
+                hasProperty("name", equalTo("Artem")),
+                hasProperty("age")));
+    }
+
+    public class PojoBean {
+        private String name;
+        private Integer age;
+
+        PojoBean(String name, Integer age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+    }
+
 }
+
+
