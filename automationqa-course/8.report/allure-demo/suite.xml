@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Демонстрационный тестовый набор">
+    <test name="Демонстрация работы Allure">
+        <classes>
+            <class name="com.github.dmtest.test.DemoSuccessConnection"/>
+            <class name="com.github.dmtest.test.DemoSteps"/>
+            <class name="com.github.dmtest.test.DemoAttachments"/>
+            <class name="com.github.dmtest.test.annotations.DemoAnnotationDescription"/>
+            <class name="com.github.dmtest.test.annotations.DemoAnnotationsFunctionality"/>
+            <class name="com.github.dmtest.test.annotations.DemoAnnotationFlaky"/>
+            <class name="com.github.dmtest.test.annotations.DemoAnnotationsLinks"/>
+            <class name="com.github.dmtest.test.annotations.DemoAnnotationOwner"/>
+            <class name="com.github.dmtest.test.annotations.DemoAnnotationSeverity"/>
+            <class name="com.github.dmtest.test.DemoParametrizedTests"/>
+            <class name="com.github.dmtest.test.DemoCategories"/>
+            <class name="com.github.dmtest.test.DemoEnvironment"/>
+        </classes>
+    </test>
+</suite>
