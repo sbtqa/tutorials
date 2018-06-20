@@ -2,6 +2,9 @@ package ru.sbtqa.tutorials.xunit.corematchers;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -146,6 +149,40 @@ class CoreMatchersTest {
         public void setAge(Integer age) {
             this.age = age;
         }
+    }
+
+
+
+    /* =====================================
+     * МАТЧЕРЫ ДЛЯ РАБОТЫ С ЧИСЛАМИ
+     * =====================================
+     */
+
+    /**
+     * Матчер closeTo - используем, чтобы проверить равно ли значение "200.24" числу 202, в пределах диапозона +/- 10.
+     * В пределах диапозона плюс, минус 10.
+     */
+    @Test
+    void shouldWorkCloseTo() {
+        assertThat(200.24, is(closeTo(202, 10)));
+    }
+
+    /**
+     * Матчер greaterThan, проверяем, что 100 больше, чем 18
+     */
+    @Test
+    void shouldWorkGreaterThan () {
+        assertThat(100, greaterThan(18));
+    }
+
+    /**
+     * Матчер greaterThanOrEqualTo проверяет, что проверяемое значение больше 18.
+     * В текущем примере работаем со списком - используем матчер everyItem для обработки каждого значения списка
+     */
+    @Test
+    void shouldWorkEveryItemInListGreaterThanOrEqualToNumber () {
+        IntStream ages = IntStream.of(21, 25, 30, 18);
+        assertThat(ages.boxed().collect(toList()), everyItem(greaterThanOrEqualTo(18)));
     }
 
 }
