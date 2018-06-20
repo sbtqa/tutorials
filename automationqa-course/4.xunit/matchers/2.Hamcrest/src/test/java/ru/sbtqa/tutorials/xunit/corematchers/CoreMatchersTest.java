@@ -112,6 +112,16 @@ class CoreMatchersTest {
                 hasProperty("age")));
     }
 
+    /**
+     * Проверяем свойства одного объекта идентичны другому объекту
+     */
+    @Test
+    void shouldWorkSamePropertyValuesAs() {
+        PojoBean pojoBean1 = new PojoBean("Artem", 29);
+        PojoBean pojoBean2 = new PojoBean("Artem", 29);
+        assertThat(pojoBean1, samePropertyValuesAs(pojoBean2));
+    }
+
     public class PojoBean {
         private String name;
         private Integer age;
