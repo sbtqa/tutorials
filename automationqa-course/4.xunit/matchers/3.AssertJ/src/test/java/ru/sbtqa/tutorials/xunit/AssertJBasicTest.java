@@ -58,9 +58,13 @@ class AssertJBasicTest {
         assertThat(autoQA1).as("Сообщение при ошибке").isEqualToIgnoringNullFields(autoQA2);
     }
 
-
-
-
-
-
+    /**
+     * Сравниваем два объекта посредством сравнения полей объектов
+     */
+    @Test
+    void shouldWorkIsEqualToComparingFieldByField() {
+        autoQA1 = new QA("Dmitriy",  Collections.singletonList("Sber"));
+        autoQA2 = new QA("Dmitriy",  Collections.singletonList("Sber"));
+        assertThat(autoQA1).isEqualToComparingFieldByField(autoQA2);
+    }
 }
