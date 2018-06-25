@@ -67,4 +67,14 @@ class AssertJBasicTest {
         autoQA2 = new QA("Dmitriy",  Collections.singletonList("Sber"));
         assertThat(autoQA1).isEqualToComparingFieldByField(autoQA2);
     }
+
+    /**
+     * Проверяем, что у объекта Under Test есть свойство/поле с нужным именем
+     */
+    @Test
+    void shouldWorkHasFieldOrProperty() {
+        autoQA1 = new QA("Artem Sokovets",  Collections.singletonList("Google"));
+        assertThat(autoQA1).hasFieldOrProperty("name").hasFieldOrProperty("experience");
+    }
+
 }
