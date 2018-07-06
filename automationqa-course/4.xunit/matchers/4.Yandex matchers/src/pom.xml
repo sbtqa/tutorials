@@ -32,6 +32,17 @@
         </dependency>
         <!-- Добавление Yandex-Matchers для использования матчеров -->
         <dependency>
+            <groupId>ru.yandex.qatools.matchers</groupId>
+            <artifactId>webdriver-matchers</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.matchers</groupId>
+            <artifactId>matcher-decorators</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        <!-- Подключаем Selenium Java -->
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>LATEST</version>

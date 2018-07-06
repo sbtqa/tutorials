@@ -1,12 +1,20 @@
 package ru.sbtqa.tutorials.xunit.yandexmatchers;
 
 import com.google.inject.Inject;
+import org.hamcrest.core.Every;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 import ru.sbtqa.tutorials.xunit.yandexmatchers.core.modules.DriverModule;
 import ru.sbtqa.tutorials.xunit.yandexmatchers.core.pages.Google;
+import ru.yandex.qatools.matchers.decorators.MatcherDecorators;
+import ru.yandex.qatools.matchers.webdriver.DisplayedMatcher;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Every.everyItem;
+import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.should;
+import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.*;
 
 
 /**
@@ -25,7 +33,9 @@ public class WebDriverMatcherTest {
     public void shouldDisplayedGooglePageWithResult() {
         google.goTo();
         google.getSearchWidget().searchFor("Sberbank - Russian Commercial Bank");
-        google.getResults().displayResult();
+
+        //Используем матчер should и displayed из библиотек Yandex-Matchers. Матчер everyItem используем из Hamcrest Core
+        assertThat(google.getGoogleSearchResult().getResults(), should(everyItem(displayed())));
     }
 
     @AfterMethod

@@ -35,4 +35,8 @@ public class GoogleSearchResult {
                 .map(WebElement::getText)
                 .forEach(System.out::println);
     }
+
+    public List<WebElement> getResults() {
+        return results;
+    }
 }

@@ -35,7 +35,7 @@ public class Google {
         return searchBox;
     }
 
-    public GoogleSearchResult getResults() {
+    public GoogleSearchResult getGoogleSearchResult() {
         return searchResult;
     }
 
