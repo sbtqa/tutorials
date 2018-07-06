@@ -1,14 +1,17 @@
 package ru.sbtqa.patterns.creational;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import ru.sbtqa.patterns.creational.pool.Resource;
 import ru.sbtqa.patterns.creational.pool.ResourceManager;
 
-public class ResourceTest {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+class ResourceTest {
 
     @Test
-    public void test() throws InterruptedException {
-        ResourceManager manager = new ResourceManager(4);
+    void resourceTest() {
+        ResourceManager manager = ResourceManager.getInstance();
         Resource resource = manager.getResource();
 
         resource.operation1();
@@ -18,12 +21,12 @@ public class ResourceTest {
     }
 
     @Test
-    public void resourceTest() throws InterruptedException {
-        ResourceManager manager = new ResourceManager(4);
-
-        manager.use(resource ->
+    void resourceTestLambda() {
+        ResourceManager.getInstance().use(resource ->
                 resource.operation1()
                         .operation2()
         );
+        ExecutorService service = Executors.newFixedThreadPool(4);
+        service.submit(this::resourceTest);
     }
 }

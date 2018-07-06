@@ -1,17 +1,18 @@
 package ru.sbtqa.patterns.structural.proxy;
 
 import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.ws.WebServiceException;
-import java.nio.file.AccessDeniedException;
-import java.rmi.server.ServerNotActiveException;
 import java.security.Key;
-import java.util.MissingResourceException;
+import java.util.Arrays;
 
 public class SecuredServer implements Server {
 
-    private RealServer server = new RealServer();
+    private RealServer server;
+
+    public SecuredServer(String url) {
+        this.server = new RealServer(url);
+    }
 
     private static final String ALGO = "AES";
     private static final byte[] keyValue =
@@ -24,7 +25,7 @@ public class SecuredServer implements Server {
             Cipher cipher = Cipher.getInstance(ALGO);
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] encrypted = cipher.doFinal(message.getBytes());
-            System.out.println("Encrypted message - " + encrypted);
+            System.out.println("Encrypted message - " + Arrays.toString(encrypted));
             return server.sendMessage(new String(encrypted));
         } catch (Exception e) {
             e.printStackTrace();

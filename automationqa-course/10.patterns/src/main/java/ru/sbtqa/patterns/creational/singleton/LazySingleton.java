@@ -1,18 +1,12 @@
 package ru.sbtqa.patterns.creational.singleton;
 
 public class LazySingleton {
-    private static volatile LazySingleton ourInstance;
+    private static LazySingleton ourInstance;
 
-    public static LazySingleton getInstance() {
-        LazySingleton localInstance = ourInstance;
-        if (localInstance == null) {
-            synchronized (LazySingleton.class) {
-                localInstance = ourInstance;
-                if (localInstance == null)
-                    ourInstance = localInstance = new LazySingleton();
-            }
-        }
-        return localInstance;
+    public synchronized static LazySingleton getInstance() {
+        if (ourInstance == null)
+            ourInstance = new LazySingleton();
+        return ourInstance;
     }
 
     private LazySingleton() {

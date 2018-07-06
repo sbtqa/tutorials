@@ -10,23 +10,26 @@ public class FactoryTest {
 
     @Test
     public void nofactoryTest() {
-        Car sedan1 = new Sedan();
-        Car sedan2 = new Sedan();
+        Car sedan1 = new Sedan(1);
+        Car sedan2 = new Sedan(2);
         Car minivan = new Minivan();
 
         sedan1.accelerate();
         sedan2.accelerate();
         sedan1.brake();
-        //....
+        minivan.accelerate();
+        /* .... */
     }
 
     @Test
     public void factoryTest() {
         CarFactory factory = new CarFactory();
-        Car car = factory.create(CarType.SMART);
 
-        car.accelerate();
-        car.brake();
+        Car sedan = factory.create(CarType.SEDAN);
+        Car minivan = factory.create(CarType.MINIVAN);
+
+        sedan.accelerate();
+        sedan.brake();
         //....
     }
 }

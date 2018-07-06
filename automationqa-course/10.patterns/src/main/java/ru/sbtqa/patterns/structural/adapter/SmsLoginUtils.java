@@ -4,7 +4,7 @@ import ru.sbtqa.patterns.creational.factory.java8.User;
 
 /**
  * @author Alexey Rumyantsev
- *
+ * <p>
  * Legacy code ¯\_(ツ)_/¯
  */
 public class SmsLoginUtils {

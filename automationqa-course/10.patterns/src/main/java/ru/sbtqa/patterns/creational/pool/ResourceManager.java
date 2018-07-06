@@ -1,7 +1,7 @@
 package ru.sbtqa.patterns.creational.pool;
 
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 
 /**
@@ -9,24 +9,30 @@ import java.util.function.Consumer;
  */
 public class ResourceManager {
 
-    private static BlockingQueue<Resource> queue;
+    private static ResourceManager instance = new ResourceManager(4);
 
-    public ResourceManager(int poolSize) {
-        queue = new LinkedBlockingQueue<>(poolSize);
+    private BlockingQueue<Resource> queue;
+
+    private ResourceManager(int poolSize) {
+        queue = new ArrayBlockingQueue<>(poolSize);
         for (int i = 0; i < poolSize; i++)
             queue.add(new Resource());
     }
 
-    public Resource getResource() throws InterruptedException {
-        return queue.take();
+    public static ResourceManager getInstance() {
+        return instance;
     }
 
-    public void releaseResource(Resource resource) throws InterruptedException {
+    public Resource getResource() {
+        return queue.remove();
+    }
+
+    public void releaseResource(Resource resource) {
         resource.close();
-        queue.put(resource);
+        queue.add(resource);
     }
 
-    public void use(Consumer<Resource> task) throws InterruptedException {
+    public void use(Consumer<Resource> task) {
         Resource resource = getResource();
         task.accept(resource);
         releaseResource(resource);

@@ -15,7 +15,7 @@ public class CarFactory {
             case MINIVAN:
                 return new Minivan();
             case SEDAN:
-                return new Sedan();
+                return new Sedan(counter.incrementAndGet());
             default:
                 throw new IllegalArgumentException("Неизвестный тип авто");
         }

@@ -3,6 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.sbtqa.tutorials</groupId>
     <artifactId>patterns</artifactId>
+    <packaging>jar</packaging>
     <version>1.0</version>
     <name>patterns</name>
     <url>http://maven.apache.org</url>

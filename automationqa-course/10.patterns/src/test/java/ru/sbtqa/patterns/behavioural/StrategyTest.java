@@ -1,6 +1,7 @@
 package ru.sbtqa.patterns.behavioural;
 
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import ru.sbtqa.patterns.behavioural.strategy.LoginStrategies;
 import ru.sbtqa.patterns.behavioural.strategy.old.ApiLoginStrategy;
@@ -9,17 +10,19 @@ import ru.sbtqa.patterns.behavioural.strategy.old.LoginStrategy;
 /**
  * @author Alexey Rumyantsev
  */
-public class StrategyTest {
+class StrategyTest {
+
+    private LoginStrategy strategy;
 
     @Test
-    public void strategyTest() {
-        LoginStrategy strategy = new ApiLoginStrategy();
+    void strategyTest() {
+        strategy = new ApiLoginStrategy();
         strategy.login(new ChromeDriver());
     }
 
     @Test
-    public void lambdaStrategyTest() {
-        LoginStrategy strategy = LoginStrategies::apiLogin;
+    void lambdaStrategyTest() {
+        strategy = LoginStrategies::formLogin;
         strategy.login(new ChromeDriver());
     }
 }

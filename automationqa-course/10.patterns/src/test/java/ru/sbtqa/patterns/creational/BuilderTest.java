@@ -15,23 +15,24 @@ public class BuilderTest {
 
     @Test
     public void test() {
-        //static class
-        Cookie cookie = new Cookie.Builder("sessionId", "some_id")
+        Cookie cookie = new Cookie.Builder("sessionId","123")
                 .setComment("comment")
                 .setHttpOnly(true)
                 .setSecured(true)
                 .build();
 
-
-        RequestSpecBuilder builder = new RequestSpecBuilder();
-        builder.setContentType(ContentType.JSON)
+        RequestSpecification specs = new RequestSpecBuilder()
+                .setContentType(ContentType.JSON)
                 .addCookie(cookie)
-                .addParam("parameter1","value")
-                .setBody("{\"username\": \"123\"}")
-                .log(LogDetail.ALL);
+                .addParam("param1", "value1")
+                .log(LogDetail.ALL)
+                .build();
 
         RestAssured.given()
-                .spec(builder.build())
-                .post("some_url");
+                .spec(specs)
+                .post("url1");
+        RestAssured.given()
+                .spec(specs)
+                .post("url2");
     }
 }

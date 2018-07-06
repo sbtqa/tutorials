@@ -1,7 +1,7 @@
 package ru.sbtqa.patterns.creational.pool;
 
-public class Resource implements AutoCloseable {
-    public Resource() {
+public class Resource {
+    Resource() {
         System.out.println("open resource");
     }
 
@@ -15,8 +15,7 @@ public class Resource implements AutoCloseable {
         return this;
     }
 
-    public void close() {
+    void close() {
         System.out.println("free resource");
     }
-
 }

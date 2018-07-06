@@ -6,12 +6,12 @@ package ru.sbtqa.patterns.behavioural.state;
 public class ReleasedCardState implements CardState {
 
     @Override
-    public void withdraw(int amount) {
+    public void withdraw(Card card, int amount) {
         throw new IllegalStateException("Карта не активирована");
     }
 
     @Override
-    public void deposit(int amount) {
+    public void deposit(Card card, int amount) {
         throw new IllegalStateException("Карта не активирована");
     }
 }
