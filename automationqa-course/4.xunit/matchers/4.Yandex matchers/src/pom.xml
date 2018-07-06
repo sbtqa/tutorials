@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.sbtqa.tutorials.xunit</groupId>
+    <artifactId>yandex-matchers</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>yandex-matchers-example</name>
+    <developers>
+        <developer>
+            <id>artsok</id>
+            <name>Artem Sokovets</name>
+            <email>artem@sokovets.ru</email>
+        </developer>
+    </developers>
+    <dependencies>
+        <!-- Добавление TestNG для использования в тестах -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.14.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Добавление Hamcrest библиотеки для написания/использования матчеров -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>LATEST</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Добавление Yandex-Matchers для использования матчеров -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>LATEST</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Добавление Juice -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <!-- Подключаем Web Driver Manager-->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <!-- Подключаем плагин для компиляции проекта -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- Указание maven'у, что исходники написаны на Java 8 -->
+                    <source>1.8</source>
+                    <!-- Указание maven'у, что исходники нужно скомпилировать под Java 8 -->
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
