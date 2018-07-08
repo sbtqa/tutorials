@@ -8,11 +8,13 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 import ru.sbtqa.tutorials.xunit.yandexmatchers.core.modules.DriverModule;
 import ru.sbtqa.tutorials.xunit.yandexmatchers.core.pages.Google;
+import ru.yandex.qatools.matchers.decorators.TimeoutWaiter;
+import ru.yandex.qatools.matchers.webdriver.TextMatcher;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Every.everyItem;
 import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.should;
 import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.timeoutHasExpired;
@@ -21,6 +23,7 @@ import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.displayed;
 import static ru.yandex.qatools.matchers.webdriver.EnabledMatcher.enabled;
 import static ru.yandex.qatools.matchers.webdriver.ExistsMatcher.exists;
 import static ru.yandex.qatools.matchers.webdriver.TagNameMatcher.tagName;
+import static ru.yandex.qatools.matchers.webdriver.TextMatcher.text;
 
 
 /**
@@ -64,6 +67,32 @@ public class WebDriverMatcherTest {
                 decorateMatcherWithWaiter(
                         should(everyItem(allOf(enabled(), exists(), tagName("div")))),
                         timeoutHasExpired(5000)));
+    }
+
+
+    /**
+     *  Используем матчер-декоратор should и whileWaitingUntil из класса {@link ru.yandex.qatools.matchers.decorators.MatcherDecoratorsBuilder}
+     *  Матчеры everyItem, anyOf, containsString используем из библиотеки Hamcrest Core
+     *  Матчер text() используем {@link TextMatcher}
+     *
+     *  В данном примере, делаем поиск по тексту Sberbank-Technology и проверяем результат. Каждый {@link WebElement} проверяем,
+     *  что он содержит текст Sberbank/Сбербанк. Проверка будет пытаться выполнится в течение 5 секунд.
+     *  По истичению 5 секунд, тест упадет, если матчер отработал не корректно
+     *
+     *  В классе {@link TimeoutWaiter} есть статические методы для создания экземпляра класса.
+     *
+     */
+    @Test
+    public void shouldDisplayedPageWithResultWithDecorateMatcherWithWaiterAnotherForm() {
+        google.goTo();
+        google.getSearchWidget().searchFor("Sberbank-Technology");
+        List<WebElement> resultList = google.getGoogleSearchResult().getResults();
+        assertThat(resultList,
+                should(everyItem(
+                        text(anyOf(
+                                containsString("Sberbank"),
+                                containsString("Сбербанк")))))
+                        .whileWaitingUntil(new TimeoutWaiter(5000)));
     }
 
 
