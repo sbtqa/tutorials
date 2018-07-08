@@ -5,6 +5,8 @@ package ru.sbtqa.patterns.creational.factory;
  */
 public interface Car {
     void accelerate();
+
     void brake();
+
     void turn();
 }

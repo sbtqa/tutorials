@@ -1,16 +1,17 @@
 package ru.sbtqa.patterns.creational;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 import ru.sbtqa.patterns.creational.abstractfactory.*;
 
 /**
  * @author Alexey Rumyantsev
  */
-public class AbstractFactoryTest {
+class AbstractFactoryTest {
+
+    private DeviceFactory factory = new AppleDeviceFactory();
 
     @Test
-    public void abstractFactoryTest() {
-        DeviceFactory factory = new MicrosoftDeviceFactory();
+    void abstractFactoryTest() {
         Phone phone = factory.createPhone();
         Laptop laptop = factory.createLaptop();
 

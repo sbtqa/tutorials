@@ -1,4 +1,4 @@
-package ru.sbtqa.patterns.structural.bridge;
+package ru.sbtqa.patterns.structural.bridge.data;
 
 public interface DataSource {
     String getParameter(String param);

@@ -8,16 +8,16 @@ public class Minivan implements Car {
 
     @Override
     public void accelerate() {
-
+        System.out.println("Minivan accelerates");
     }
 
     @Override
     public void brake() {
-
+        System.out.println("Minivan brakes");
     }
 
     @Override
     public void turn() {
-
+        System.out.println("Minivan is turning...");
     }
 }

@@ -1,29 +1,29 @@
 package ru.sbtqa.patterns.behavioural.chain;
 
 public interface RequestHandlers {
-    static Request handleImage(Request request) {
-        System.out.println("Enter handleImage");
-        if (!request.isHandled() && request.getType().equals(RequestType.IMAGE)) {
+    static Request handleJSON(Request request) {
+        System.out.println("Enter handleJSON");
+        if (!request.isHandled() && request.getType() == RequestType.JSON) {
             request.setHandled(true);
-            System.out.println("Handled by Image Handler");
+            System.out.println("Handled by JSON Handler");
         }
         return request;
     }
 
-    static Request handleExecutable(Request request) {
-        System.out.println("Enter handleExecutable");
-        if (!request.isHandled() && request.getType().equals(RequestType.EXECUTABLE)) {
+    static Request handleXML(Request request) {
+        System.out.println("Enter handleXML");
+        if (!request.isHandled() && request.getType() == RequestType.XML) {
             request.setHandled(true);
-            System.out.println("Handled by Executable Handler");
+            System.out.println("Handled by XML Handler");
         }
         return request;
     }
 
-    static Request handleAudio(Request request) {
-        System.out.println("Enter handleAudio");
-        if (!request.isHandled() && request.getType().equals(RequestType.AUDIO)) {
+    static Request handleBinary(Request request) {
+        System.out.println("Enter handleBinary");
+        if (!request.isHandled() && request.getType() == RequestType.BINARY) {
             request.setHandled(true);
-            System.out.println("Handled by Audio Handler");
+            System.out.println("Handled by BINARY Handler");
         }
         return request;
     }

@@ -2,37 +2,37 @@ package ru.sbtqa.patterns.extra;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import ru.sbtqa.patterns.extra.matchers.EmailAssert;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
 import static ru.sbtqa.patterns.extra.matchers.EmailAssert.assertThat;
+
 
 /**
  * @author Alexey Rumyantsev
  */
-public class MatchersTest {
+class MatchersTest {
 
     @Test
-    public void codeSmellTest(){
+    void codeSmellTest() {
         List<String> strings = new ArrayList<>();
-        strings.add("abc@mail.ru");
+        strings.add("abcmail.ru");
         strings.add("abc@google.com");
         strings.add("abc@zxy.org");
 
-        for (String s: strings) {
-            assertTrue(s.contains("@"));
-        }
+        strings.forEach(s -> Assert.assertTrue(s + " is invalid", s.contains("@")));
+
     }
 
     @Test
-    public void matcherTest(){
+    void matcherTest() {
         List<String> strings = new ArrayList<>();
-        strings.add("abc@mail.ru");
+        strings.add("abcmail.ru");
         strings.add("abc@google.com");
         strings.add("abc@zxy.org");
 
-        assertThat(strings).confirmEmailRegex();
+        assertThat(strings).confirmEmailRegEx();
     }
 }

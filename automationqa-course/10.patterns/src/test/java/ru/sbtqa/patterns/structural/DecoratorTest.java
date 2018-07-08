@@ -5,29 +5,31 @@ import ru.sbtqa.patterns.structural.decorator.Button;
 import ru.sbtqa.patterns.structural.decorator.ButtonDecorator;
 import ru.sbtqa.patterns.structural.decorator.ConcreteButton;
 
+import java.util.function.Function;
+
 /**
  * @author Alexey Rumyantsev
  */
-public class DecoratorTest {
+class DecoratorTest {
     @Test
-    public void test() {
+    void test() {
         Button button = new ConcreteButton();
         button.click();
 
         System.out.println("=================");
-        System.out.println("Adding doubleClick");
+        System.out.println("Add double click");
         System.out.println("=================");
 
-        //Decorate with doubleClick
-        button = ButtonDecorator.decorate(button, ButtonDecorator::doubleClick);
+        Function<Button, Button> function = ButtonDecorator::doubleClick;
+        button = function.apply(button);
         button.click();
 
         System.out.println("=================");
-        System.out.println("Adding logging");
+        System.out.println("Add logger");
         System.out.println("=================");
 
-        //Decorate with log
-        button = ButtonDecorator.decorate(button, ButtonDecorator::log);
+        function = ButtonDecorator::log;
+        button = function.apply(button);
         button.click();
     }
 }

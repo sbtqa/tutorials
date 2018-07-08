@@ -13,15 +13,15 @@ import static org.hamcrest.Matchers.everyItem;
 public class EmailAssert {
     private List<String> strings;
 
-    public static EmailAssert assertThat(List<String> strings) {
-        return new EmailAssert(strings);
-    }
-
     private EmailAssert(List<String> strings) {
         this.strings = strings;
     }
 
-    public void confirmEmailRegex() {
-        Assert.assertThat("e-mail regex fail", strings, everyItem(containsString("@")));
+    public static EmailAssert assertThat(List<String> strings) {
+        return new EmailAssert(strings);
+    }
+
+    public void confirmEmailRegEx() {
+        Assert.assertThat("E-mail check FAIL", strings, everyItem(containsString("@")));
     }
 }

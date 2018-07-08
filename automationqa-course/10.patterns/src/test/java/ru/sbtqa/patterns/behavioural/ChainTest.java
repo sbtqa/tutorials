@@ -13,23 +13,22 @@ import java.util.stream.Stream;
 public class ChainTest {
 
     private UnaryOperator<Function<Request, Request>> handledChecker =
-            (f) -> (r) -> {
-                if (r.isHandled()) {
-                    return r;
-                }
-                return f.apply(r);
+            (function) -> (request) -> {
+                if (request.isHandled())
+                    return request;
+                return function.apply(request);
             };
 
-    private Function<Request, Request> chainOfHandlers =
+    private Function<Request, Request> chain =
             Stream.<Function<Request, Request>>of(
-                    handledChecker.apply(RequestHandlers::handleAudio),
-                    handledChecker.apply(RequestHandlers::handleImage),
-                    handledChecker.apply(RequestHandlers::handleExecutable))
-                    .reduce(Function.identity(), Function::andThen);
+                    handledChecker.apply(RequestHandlers::handleXML),
+                    handledChecker.apply(RequestHandlers::handleJSON),
+                    handledChecker.apply(RequestHandlers::handleBinary)
+            ).reduce(Function.identity(), Function::andThen);
 
     @Test
     public void chainTest() {
-        Request request = chainOfHandlers.apply(new Request(RequestType.IMAGE));
+        Request request = chain.apply(new Request(RequestType.JSON));
         Assert.assertTrue(request.isHandled());
     }
 }
