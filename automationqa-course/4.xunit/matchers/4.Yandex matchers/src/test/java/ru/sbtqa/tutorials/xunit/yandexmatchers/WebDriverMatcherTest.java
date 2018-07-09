@@ -35,6 +35,8 @@ import static ru.yandex.qatools.matchers.webdriver.driver.CanFindElementMatcher.
 
 /**
  * Примеры использования стандартных матчеров библиотеки Yandex (Webdriver Matchers)
+ *
+ * @author artsok
  */
 @Guice(modules = {DriverModule.class})
 public class WebDriverMatcherTest {
