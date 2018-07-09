@@ -1,15 +1,20 @@
 package ru.sbtqa.tutorials.xunit.yandexmatchers;
 
 import com.google.inject.Inject;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 import ru.sbtqa.tutorials.xunit.yandexmatchers.core.modules.DriverModule;
 import ru.sbtqa.tutorials.xunit.yandexmatchers.core.pages.Google;
 import ru.yandex.qatools.matchers.decorators.TimeoutWaiter;
+import ru.yandex.qatools.matchers.webdriver.RefreshPageAction;
 import ru.yandex.qatools.matchers.webdriver.TextMatcher;
+import ru.yandex.qatools.matchers.webdriver.driver.CanFindElementMatcher;
 
 import java.util.List;
 
@@ -22,8 +27,10 @@ import static ru.yandex.qatools.matchers.decorators.WaiterMatcherDecorator.decor
 import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.displayed;
 import static ru.yandex.qatools.matchers.webdriver.EnabledMatcher.enabled;
 import static ru.yandex.qatools.matchers.webdriver.ExistsMatcher.exists;
+import static ru.yandex.qatools.matchers.webdriver.RefreshPageAction.pageRefresh;
 import static ru.yandex.qatools.matchers.webdriver.TagNameMatcher.tagName;
 import static ru.yandex.qatools.matchers.webdriver.TextMatcher.text;
+import static ru.yandex.qatools.matchers.webdriver.driver.CanFindElementMatcher.canFindElement;
 
 
 /**
@@ -38,13 +45,20 @@ public class WebDriverMatcherTest {
     @Inject
     private WebDriver driver;
 
+    @Inject
+    private Actions actions;
+
+    @BeforeMethod
+    public void setUp(){
+        google.goTo();
+    }
+
     /**
      * Используем матчер should и displayed из библиотек Yandex-Matchers.
      * Матчер everyItem используем из Hamcrest Core
      */
     @Test
     public void shouldDisplayedGooglePageWithResult() {
-        google.goTo();
         google.getSearchWidget().searchFor("Sberbank - Russian Commercial Bank");
         assertThat(google.getGoogleSearchResult().getResults(), should(everyItem(displayed())));
     }
@@ -60,7 +74,6 @@ public class WebDriverMatcherTest {
      */
     @Test
     public void shouldDisplayedPageWithResultWithDecorateMatcherWithWaiter() {
-        google.goTo();
         google.getSearchWidget().searchFor("Sberbank");
         List<WebElement> resultList = google.getGoogleSearchResult().getResults();
         assertThat(resultList,
@@ -68,7 +81,6 @@ public class WebDriverMatcherTest {
                         should(everyItem(allOf(enabled(), exists(), tagName("div")))),
                         timeoutHasExpired(5000)));
     }
-
 
     /**
      *  Используем матчер-декоратор should и whileWaitingUntil из класса {@link ru.yandex.qatools.matchers.decorators.MatcherDecoratorsBuilder}
@@ -84,7 +96,6 @@ public class WebDriverMatcherTest {
      */
     @Test
     public void shouldDisplayedPageWithResultWithDecorateMatcherWithWaiterAnotherForm() {
-        google.goTo();
         google.getSearchWidget().searchFor("Sberbank-Technology");
         List<WebElement> resultList = google.getGoogleSearchResult().getResults();
         assertThat(resultList,
@@ -93,6 +104,29 @@ public class WebDriverMatcherTest {
                                 containsString("Sberbank"),
                                 containsString("Сбербанк")))))
                         .whileWaitingUntil(new TimeoutWaiter(5000)));
+    }
+
+    /**
+     * Негативный тест. Используем матчер-декоратор should и after {@link ru.yandex.qatools.matchers.decorators.MatcherDecoratorsBuilder}
+     * В after(...) передаем {@link ru.yandex.qatools.matchers.decorators.Action}, а именно {@link RefreshPageAction}, т.е
+     * находим вебэлемент {@link WebElement} и после обновления страницы проверяем, что он должен быть на странице.
+     *
+     */
+    @Test
+    public void shouldDisplayedPageWithResultWithActionMatcherDecorator() {
+        google.getSearchWidget().searchFor("TAG");
+        assertThat(driver.findElement(By.className("rc")),
+                should(exists()).after(pageRefresh(driver)));
+    }
+
+    /**
+     * Проверка, что на странице присутствует вебэлемент.
+     * Используется матчер canFindElement(...), класса {@link CanFindElementMatcher}
+     */
+    @Test
+    public void shouldDriverCanFindElement() {
+        google.getSearchWidget().searchFor("Selenoid");
+        assertThat(driver, canFindElement(By.xpath("//a[contains(., 'Selenoid - Aerokube')]")));
     }
 
 
