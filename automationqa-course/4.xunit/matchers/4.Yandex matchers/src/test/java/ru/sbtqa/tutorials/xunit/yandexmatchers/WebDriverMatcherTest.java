@@ -36,7 +36,7 @@ import static ru.yandex.qatools.matchers.webdriver.driver.HasTextMatcher.textOnC
 
 
 /**
- * Примеры использования стандартных матчеров библиотеки Yandex (Webdriver Matchers)
+ * Примеры использования стандартных матчеров библиотеки Yandex-Matchers
  *
  * @author artsok
  */
@@ -137,7 +137,7 @@ public class WebDriverMatcherTest {
     /**
      * Проверка, что на странице присутсвует текст "Automation". Работает по принципу matcher.matches(wd.getPageSource()
      * Используется матчер декоратор should из {@link ru.yandex.qatools.matchers.decorators.MatcherDecoratorsBuilder},
-     * матчер textOnCurrentPage(...) из {@link HasTextMatcher}, матчер-декоратор из {@link org.hamcrest.Matchers}
+     * матчер textOnCurrentPage(...) из {@link HasTextMatcher}, матчер-декоратор is(...) из {@link org.hamcrest.Matchers}
      *
      */
     @Test
@@ -145,6 +145,8 @@ public class WebDriverMatcherTest {
         google.getSearchWidget().searchFor("Automation");
         assertThat(driver, should(textOnCurrentPage(is(containsString("Automation")))));
     }
+
+
 
 
     @AfterMethod
