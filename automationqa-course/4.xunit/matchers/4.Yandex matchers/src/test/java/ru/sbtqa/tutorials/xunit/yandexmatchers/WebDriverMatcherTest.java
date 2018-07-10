@@ -15,6 +15,7 @@ import ru.yandex.qatools.matchers.decorators.TimeoutWaiter;
 import ru.yandex.qatools.matchers.webdriver.RefreshPageAction;
 import ru.yandex.qatools.matchers.webdriver.TextMatcher;
 import ru.yandex.qatools.matchers.webdriver.driver.CanFindElementMatcher;
+import ru.yandex.qatools.matchers.webdriver.driver.HasTextMatcher;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ import static ru.yandex.qatools.matchers.webdriver.RefreshPageAction.pageRefresh
 import static ru.yandex.qatools.matchers.webdriver.TagNameMatcher.tagName;
 import static ru.yandex.qatools.matchers.webdriver.TextMatcher.text;
 import static ru.yandex.qatools.matchers.webdriver.driver.CanFindElementMatcher.canFindElement;
+import static ru.yandex.qatools.matchers.webdriver.driver.HasTextMatcher.textOnCurrentPage;
 
 
 /**
@@ -126,9 +128,22 @@ public class WebDriverMatcherTest {
      * Используется матчер canFindElement(...), класса {@link CanFindElementMatcher}
      */
     @Test
-    public void shouldDriverCanFindElement() {
+    public void shouldFindElementOnPage() {
         google.getSearchWidget().searchFor("Selenoid");
         assertThat(driver, canFindElement(By.xpath("//a[contains(., 'Selenoid - Aerokube')]")));
+    }
+
+
+    /**
+     * Проверка, что на странице присутсвует текст "Automation". Работает по принципу matcher.matches(wd.getPageSource()
+     * Используется матчер декоратор should из {@link ru.yandex.qatools.matchers.decorators.MatcherDecoratorsBuilder},
+     * матчер textOnCurrentPage(...) из {@link HasTextMatcher}, матчер-декоратор из {@link org.hamcrest.Matchers}
+     *
+     */
+    @Test
+    public void shouldFindTextOnCurrentPage() {
+        google.getSearchWidget().searchFor("Automation");
+        assertThat(driver, should(textOnCurrentPage(is(containsString("Automation")))));
     }
 
 
