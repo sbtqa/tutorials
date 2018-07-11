@@ -6,25 +6,25 @@ import ru.sbtqa.tutorials.automationqa.api.demoapp.dao.ManufacturerDao;
 import ru.sbtqa.tutorials.automationqa.api.demoapp.model.Manufacturer;
 
 @Service
-public class ModelServiceImpl implements ModelService {
+public class ModelServiceImpl implements ManufacturerService {
 
     @Autowired
-    ManufacturerDao modelDao;
+    ManufacturerDao manufacturerDao;
 
     @Override
     public Iterable getAll() {
-        return modelDao.findAll();
+        return manufacturerDao.findAll();
     }
 
     @Override
     public Manufacturer getById(Integer id) {
-        return modelDao.findById(id).orElseThrow(IllegalStateException::new);
+        return manufacturerDao.findById(id).orElseThrow(IllegalStateException::new);
     }
 
     @Override
     public boolean deleteById(Integer id) {
-        if (modelDao.existsById(id)) {
-            modelDao.deleteById(id);
+        if (manufacturerDao.existsById(id)) {
+            manufacturerDao.deleteById(id);
             return true;
         }
         return false;
@@ -32,6 +32,18 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public <S extends Manufacturer> S save(S entity) {
-        return modelDao.save(entity);
+        return manufacturerDao.save(entity);
+    }
+
+    @Override
+    public boolean update(Manufacturer entity) {
+        Manufacturer manufacturer = manufacturerDao.findById(entity.getId()).orElse(null);
+        if (manufacturer == null)
+            return false;
+        manufacturer.setModels(entity.getModels());
+        manufacturer.setCountry(entity.getCountry());
+        manufacturer.setTitle(entity.getTitle());
+        manufacturerDao.save(manufacturer);
+        return true;
     }
 }
