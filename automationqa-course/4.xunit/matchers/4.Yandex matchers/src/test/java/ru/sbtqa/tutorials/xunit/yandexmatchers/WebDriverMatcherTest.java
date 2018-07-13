@@ -53,7 +53,7 @@ public class WebDriverMatcherTest {
     private Actions actions;
 
     @BeforeMethod
-    public void setUp(){
+    public void setUp() {
         google.goTo();
     }
 
@@ -71,7 +71,7 @@ public class WebDriverMatcherTest {
      * Используем матчер decorateMatcherWithWaiter, матчер декоратор should и мачтеры: enabled(), exists(), tagName("div")
      * из библиотеки Yandex-Matchers
      * Матчер everyItem, allOf используем из библиотеки Hamcrest Core
-     *
+     * <p>
      * В данном примере, проверяется список WebElement-ов, которые удовлетворяют определенным свойствам (См.описание используемых матчеров)
      * Если определенные условия не выполняются, то матчер-декоратор decorateMatcherWithWaiter(..) будет пытаться выполнить проверки
      * в заданный вами промежуток времени. В примере - 5 секунд
@@ -87,16 +87,15 @@ public class WebDriverMatcherTest {
     }
 
     /**
-     *  Используем матчер-декоратор should и whileWaitingUntil из класса {@link ru.yandex.qatools.matchers.decorators.MatcherDecoratorsBuilder}
-     *  Матчеры everyItem, anyOf, containsString используем из библиотеки Hamcrest Core
-     *  Матчер text() используем {@link TextMatcher}
-     *
-     *  В данном примере, делаем поиск по тексту Sberbank-Technology и проверяем результат. Каждый {@link WebElement} проверяем,
-     *  что он содержит текст Sberbank/Сбербанк. Проверка будет пытаться выполнится в течение 5 секунд.
-     *  По истичению 5 секунд, тест упадет, если матчер отработал не корректно
-     *
-     *  В классе {@link TimeoutWaiter} есть статические методы для создания экземпляра класса.
-     *
+     * Используем матчер-декоратор should и whileWaitingUntil из класса {@link ru.yandex.qatools.matchers.decorators.MatcherDecoratorsBuilder}
+     * Матчеры everyItem, anyOf, containsString используем из библиотеки Hamcrest Core
+     * Матчер text() используем {@link TextMatcher}
+     * <p>
+     * В данном примере, делаем поиск по тексту Sberbank-Technology и проверяем результат. Каждый {@link WebElement} проверяем,
+     * что он содержит текст Sberbank/Сбербанк. Проверка будет пытаться выполнится в течение 5 секунд.
+     * По истичению 5 секунд, тест упадет, если матчер отработал не корректно
+     * <p>
+     * В классе {@link TimeoutWaiter} есть статические методы для создания экземпляра класса.
      */
     @Test
     public void shouldDisplayedPageWithResultWithDecorateMatcherWithWaiterAnotherForm() {
@@ -114,7 +113,6 @@ public class WebDriverMatcherTest {
      * Негативный тест. Используем матчер-декоратор should и after {@link ru.yandex.qatools.matchers.decorators.MatcherDecoratorsBuilder}
      * В after(...) передаем {@link ru.yandex.qatools.matchers.decorators.Action}, а именно {@link RefreshPageAction}, т.е
      * находим вебэлемент {@link WebElement} и после обновления страницы проверяем, что он должен быть на странице.
-     *
      */
     @Test
     public void shouldDisplayedPageWithResultWithActionMatcherDecorator() {
@@ -138,7 +136,6 @@ public class WebDriverMatcherTest {
      * Проверка, что на странице присутсвует текст "Automation". Работает по принципу matcher.matches(wd.getPageSource()
      * Используется матчер декоратор should из {@link ru.yandex.qatools.matchers.decorators.MatcherDecoratorsBuilder},
      * матчер textOnCurrentPage(...) из {@link HasTextMatcher}, матчер-декоратор is(...) из {@link org.hamcrest.Matchers}
-     *
      */
     @Test
     public void shouldFindTextOnCurrentPage() {
@@ -146,7 +143,18 @@ public class WebDriverMatcherTest {
         assertThat(driver, should(textOnCurrentPage(is(containsString("Automation")))));
     }
 
-
+    /**
+     *
+     * Кидает java.lang.NoClassDefFoundError: org/junit/internal/AssumptionViolatedException, т.к нет класса
+     * Подключаешь Junit 4 в pom.xml и все работает
+     */
+    @Test
+    public void conditionMatcherDecoratorShouldWork() throws InterruptedException {
+        google.getSearchWidget().searchFor("Allure");
+        List<WebElement> resultList = google.getGoogleSearchResult().getResults();
+        WebElement element = driver.findElement(By.xpath("//a[contains(text(), 'Войти')]"));
+        //assertThat(resultList, should(everyItem(exists())).inCase(element, notNullValue()));
+    }
 
 
     @AfterMethod
