@@ -145,15 +145,16 @@ public class WebDriverMatcherTest {
 
     /**
      *
-     * Кидает java.lang.NoClassDefFoundError: org/junit/internal/AssumptionViolatedException, т.к нет класса
-     * Подключаешь Junit 4 в pom.xml и все работает
+     * Требует подключенного Junit 4
+     * Проверка, что условие (матчер, как аргумент в методе inCase) будет выполнен.
+     * Дальше если пред-условие выполняется, выполняется основной матчер everyItem(exists()), если нет, то everyItem(exists()) - не выполняется
      */
     @Test
     public void conditionMatcherDecoratorShouldWork() throws InterruptedException {
         google.getSearchWidget().searchFor("Allure");
         List<WebElement> resultList = google.getGoogleSearchResult().getResults();
         WebElement element = driver.findElement(By.xpath("//a[contains(text(), 'Войти')]"));
-        //assertThat(resultList, should(everyItem(exists())).inCase(element, notNullValue()));
+        assertThat(resultList, should(everyItem(exists())).inCase(element, notNullValue()));
     }
 
 

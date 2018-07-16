@@ -23,23 +23,19 @@
             <version>6.14.2</version>
             <scope>test</scope>
         </dependency>
-        <!-- Добавление Hamcrest библиотеки для написания/использования матчеров -->
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>LATEST</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- Hamcrest библиотека включена в Yandex-Matchers -->
         <!-- Добавление Yandex-Matchers для использования матчеров -->
         <dependency>
             <groupId>ru.yandex.qatools.matchers</groupId>
             <artifactId>webdriver-matchers</artifactId>
             <version>1.4.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>ru.yandex.qatools.matchers</groupId>
             <artifactId>matcher-decorators</artifactId>
             <version>1.4.1</version>
+            <scope>test</scope>
         </dependency>
         <!-- Подключаем Selenium Java -->
         <dependency>
@@ -48,7 +44,7 @@
             <version>LATEST</version>
             <scope>test</scope>
         </dependency>
-        <!-- Добавление Juice -->
+        <!-- Подключаем Juice -->
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
@@ -59,6 +55,13 @@
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>2.2.4</version>
+        </dependency>
+        <!-- Подключаем Junit, чтобы не падало по NoClassDefFoundError org/junit/internal/AssumptionViolatedException.
+          ConditionMatcherDecorator завязан на него-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
         </dependency>
     </dependencies>
     <build>
