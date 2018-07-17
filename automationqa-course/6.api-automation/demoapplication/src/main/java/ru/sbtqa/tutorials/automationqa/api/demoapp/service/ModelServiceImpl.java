@@ -2,48 +2,42 @@ package ru.sbtqa.tutorials.automationqa.api.demoapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sbtqa.tutorials.automationqa.api.demoapp.dao.ManufacturerDao;
-import ru.sbtqa.tutorials.automationqa.api.demoapp.model.Manufacturer;
+import ru.sbtqa.tutorials.automationqa.api.demoapp.dao.ModelDao;
+import ru.sbtqa.tutorials.automationqa.api.demoapp.model.Model;
 
 @Service
-public class ModelServiceImpl implements ManufacturerService {
-
+public class ModelServiceImpl implements ModelService {
     @Autowired
-    ManufacturerDao manufacturerDao;
+    ModelDao modelDao;
 
     @Override
-    public Iterable getAll() {
-        return manufacturerDao.findAll();
+    public Iterable<Model> getAll() {
+        return modelDao.findAll();
     }
 
     @Override
-    public Manufacturer getById(Integer id) {
-        return manufacturerDao.findById(id).orElseThrow(IllegalStateException::new);
+    public <S extends Model> S save(S entity) {
+        return modelDao.save(entity);
+    }
+
+    @Override
+    public boolean update(Model entity) {
+        Model model = modelDao.findById(entity.getId()).orElse(null);
+        if (model == null)
+            return false;
+        model.setId(entity.getId());
+        model.setTitle(entity.getTitle());
+        modelDao.save(model);
+        return true;
+    }
+
+    @Override
+    public Model getById(Integer id) {
+        return modelDao.findById(id).orElseThrow(IllegalStateException::new);
     }
 
     @Override
     public boolean deleteById(Integer id) {
-        if (manufacturerDao.existsById(id)) {
-            manufacturerDao.deleteById(id);
-            return true;
-        }
         return false;
-    }
-
-    @Override
-    public <S extends Manufacturer> S save(S entity) {
-        return manufacturerDao.save(entity);
-    }
-
-    @Override
-    public boolean update(Manufacturer entity) {
-        Manufacturer manufacturer = manufacturerDao.findById(entity.getId()).orElse(null);
-        if (manufacturer == null)
-            return false;
-        manufacturer.setModels(entity.getModels());
-        manufacturer.setCountry(entity.getCountry());
-        manufacturer.setTitle(entity.getTitle());
-        manufacturerDao.save(manufacturer);
-        return true;
     }
 }
