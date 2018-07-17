@@ -25,10 +25,10 @@ class StubbingListsTest {
 
     @Test
     void testStubbingMethodWithReturnValue() {
-        // Создаётся заглушка - если у объекта mockedList будет вызван метод get с аргументом 0, то необходимо вернуть 1
-        when(mockedList.get(0)).thenReturn(1);
         // Создаётся заглушка - если у объекта mockedList будет вызван метод get с аргументом 1, то необходимо вернуть 2
         when(mockedList.get(1)).thenReturn(2);
+        // Создаётся заглушка - если у объекта mockedList будет вызван метод get с аргументом 0, то необходимо вернуть 1
+        when(mockedList.get(0)).thenReturn(1);
         // Создаётся заглушка - если у объекта mockedList будет вызван метод get с аргументом 2, то бросить исключение RuntimeException
         when(mockedList.get(2)).thenThrow(new RuntimeException());
         // Создаётся заглушка - если у объекта mockedList будет вызван метод size, то необходимо вернуть 1000
