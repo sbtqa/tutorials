@@ -20,6 +20,7 @@ public class Lesson4 {
     @Test
     public void test() {
         RequestSpecification requestSpecification = new RequestSpecBuilder()
+                .setBaseUri("http://localhost:8080")
                 .setAccept(ContentType.XML)
                 .setContentType(ContentType.ANY)
                 .log(LogDetail.ALL)
@@ -32,7 +33,7 @@ public class Lesson4 {
         RestAssured.requestSpecification = requestSpecification;
 
         given()
-                .when().get("http://localhost:8080/car/manufacturers/1")
+                .when().get("car/manufacturers/1")
                 .then().statusCode(200).log().all();
     }
 }
