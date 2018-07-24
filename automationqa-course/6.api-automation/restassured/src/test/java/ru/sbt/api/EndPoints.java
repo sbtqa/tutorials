@@ -8,5 +8,5 @@ package ru.sbt.api;
  */
 public interface EndPoints {
     String manufacturs = "manufacturers";
-    String cars = "cars";
+    String models = "models";
 }
