@@ -54,7 +54,7 @@ public class ManufacturerController {
             method = RequestMethod.DELETE,
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-    @ApiOperation(value = "Позволяет добавить нового производителя в базу данных")
+    @ApiOperation(value = "Позволяет удалять производителя из базы данных")
     public ResponseEntity deleteManufacturer(@PathVariable Integer id) {
         if (manufacturerService.deleteById(id)) {
             return ResponseEntity.ok().body("{success}");
@@ -68,7 +68,7 @@ public class ManufacturerController {
             method = RequestMethod.PUT,
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-    @ApiOperation(value = "Позволяет добавить нового производителя в базу данных")
+    @ApiOperation(value = "Позволяет обновлять производителя в базе данных")
     public ResponseEntity updateManufacturer(@RequestBody Manufacturer manufacturer) {
         if (manufacturerService.update(manufacturer)) {
             return ResponseEntity.ok().body("success");
