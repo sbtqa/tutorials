@@ -34,7 +34,10 @@ public class ManufacturerController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     @ApiOperation(value = "Возвращает информацию о всех производителях", response = Iterable.class)
-    public Iterable getManufacturers() {
+    public Object getManufacturers(@RequestParam(required = false) Integer id) {
+        if (id != null) {
+            return manufacturerService.getById(id);
+        }
         return manufacturerService.getAll();
     }
 

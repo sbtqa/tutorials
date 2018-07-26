@@ -37,10 +37,18 @@ public class Lesson6 {
     }
 
     @Test
-    public void get() {
+    public void getByPathParam() {
         given()
-                .pathParam("id", 1)
-                .when().get(EndPoints.manufacture)
+//                .pathParam("id", 1)
+                .when().get(EndPoints.manufacture, 1)
+                .then().log().all().and().body("title", is("Mazda"));
+    }
+
+    @Test
+    public void getByRequestParam() {
+        given()
+                .queryParam("id", 1)
+                .when().get(EndPoints.manufactures)
                 .then().log().all().and().body("title", is("Mazda"));
     }
 
@@ -105,6 +113,5 @@ public class Lesson6 {
         given()
                 .when().delete(EndPoints.manufacture, 1)
                 .then().body(is("{success}"));
-
     }
 }
