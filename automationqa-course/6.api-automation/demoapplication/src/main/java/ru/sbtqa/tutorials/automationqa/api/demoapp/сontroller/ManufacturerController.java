@@ -50,7 +50,7 @@ public class ManufacturerController {
     }
 
     @RequestMapping(
-            path = "manufacturers",
+            path = "manufacturers/{id}",
             method = RequestMethod.DELETE,
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
@@ -71,7 +71,7 @@ public class ManufacturerController {
     @ApiOperation(value = "Позволяет обновлять производителя в базе данных")
     public ResponseEntity updateManufacturer(@RequestBody Manufacturer manufacturer) {
         if (manufacturerService.update(manufacturer)) {
-            return ResponseEntity.ok().body("success");
+            return ResponseEntity.ok().body("{success}");
         } else {
             throw new IllegalStateException("Нет производителя с таким ID");
         }

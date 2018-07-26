@@ -9,9 +9,16 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+
+/**
+ * В данном уроке выполняются все HTTP методы, обычно применяемые для CRUD операций.
+ * Также рассматривается возможность передачи динамически сформированного параметра пути
+ */
 
 public class Lesson6 {
+    private static Integer id;
+
     @BeforeClass
     public void prepare() {
         RestAssured.baseURI = "http://localhost";
@@ -29,10 +36,18 @@ public class Lesson6 {
                 .build();
     }
 
-    @Test(priority = 1)
+    @Test
     public void get() {
         given()
-                .when().get(EndPoints.manufacturs)
+                .pathParam("id", 1)
+                .when().get(EndPoints.manufacture)
+                .then().log().all().and().body("title", is("Mazda"));
+    }
+
+    @Test(priority = 1)
+    public void getAll() {
+        given()
+                .when().get(EndPoints.manufactures)
                 .then().body("size()", is(3)); // проверяем количество элементов от корневого элемента
     }
 
@@ -50,23 +65,46 @@ public class Lesson6 {
 
         RestAssured.responseSpecification = null;
 
-        Integer newElementID = given().body(newElement)
-                .when().post(EndPoints.manufacturs)
-                .then().statusCode(201)
-                .log().body()
+        id = given().body(newElement)
+                .when().post(EndPoints.manufactures)
+                .then()
+                .statusCode(201).log().body()
+                .and()
+                .body("id", not(isEmptyOrNullString()))
                 .and()
                 .extract().path("id");
-
-        System.out.println(Integer.toString(newElementID));
     }
 
-    @Test
+    @Test(priority = 3)
     public void update() {
+        String updateElement = "{" +
+                "  \"country\": \"Russia\"," +
+                "  \"id\": " + id + "," +
+                "  \"models\": [" +
+                "    {" +
+                "      \"title\": \"Vesta Cross\"," +
+                "      \"title\": \"Kalina\"," +
+                "      \"title\": \"Niva 4x4\"" +
+                "    }" +
+                "  ]," +
+                "  \"title\": \"Lada\"" +
+                "}";
 
+        RestAssured.responseSpecification = null;
+
+        given().body(updateElement)
+                .when().put(EndPoints.manufactures)
+                .then()
+                .statusCode(200).log().body()
+                .and()
+                .body(equalTo("{success}"));
     }
 
-    @Test
+    @Test(priority = 4)
     public void delete() {
+        given()
+                .when().delete(EndPoints.manufacture, 1)
+                .then().body(is("{success}"));
 
     }
 }

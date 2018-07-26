@@ -7,6 +7,7 @@ package ru.sbt.api;
  * во вторых при изменении адреса endpoint'а, его нужно будет изменить только в одном месте.
  */
 public interface EndPoints {
-    String manufacturs = "manufacturers";
+    String manufacture = "manufacturers/{id}";
+    String manufactures = "manufacturers";
     String models = "models";
 }
