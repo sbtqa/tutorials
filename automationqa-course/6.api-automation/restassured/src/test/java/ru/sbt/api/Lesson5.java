@@ -10,7 +10,6 @@ import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
  * Для уменьшения дублирования проверок, определяемых в секции ответа необходимо использовать спецификацию.
@@ -31,7 +30,6 @@ public class Lesson5 {
 
         ResponseSpecification responseSpecification = new ResponseSpecBuilder()
                 .expectStatusCode(200)
-                .expectBody("title", equalTo("Mazda"))
                 .build();
 
 //        given().spec(requestSpecification)

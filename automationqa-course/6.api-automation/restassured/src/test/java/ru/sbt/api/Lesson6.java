@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * В данном уроке выполняются все HTTP методы, обычно применяемые для CRUD операций.
  * Также рассматривается возможность передачи динамически сформированного параметра пути
+ * и параметра запроса
  */
 
 public class Lesson6 {
@@ -41,7 +42,9 @@ public class Lesson6 {
         given()
 //                .pathParam("id", 1)
                 .when().get(EndPoints.manufacture, 1)
-                .then().log().all().and().body("title", is("Mazda"));
+                .then().log().all()
+                .and()
+                .body("title", is("Mazda")); //проверка тела ответа
     }
 
     @Test
@@ -98,7 +101,7 @@ public class Lesson6 {
                 "  \"title\": \"Lada\"" +
                 "}";
 
-        RestAssured.responseSpecification = null;
+        RestAssured.responseSpecification = null; // сбросить проверку expected status
 
         given().body(updateElement)
                 .when().put(EndPoints.manufactures)
