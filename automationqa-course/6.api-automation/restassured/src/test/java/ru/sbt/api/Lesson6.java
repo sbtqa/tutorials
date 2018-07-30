@@ -7,6 +7,7 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ru.sbt.api.endpoints.EndPoints;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;

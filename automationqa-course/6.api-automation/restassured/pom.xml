@@ -30,6 +30,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--для сериализации объектов-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.6</version>
+        </dependency>
+
         <!--для логированиея http-client-->
         <!--<dependency>-->
             <!--<groupId>log4j</groupId>-->

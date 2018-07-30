@@ -7,7 +7,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 /**
- * В данном уроке показано как можно получить доступ к сервису защищенный при помощи HTTP Basic и Digest Authentication
+ * В данном уроке показано как можно получить доступ к сервису, защищенному при помощи HTTP Basic и Digest Authentication
  * Продеманстрировано как можно можно получить cookies из ответа, а также сокращенная запись получения идентификатора сессии
  *
  */

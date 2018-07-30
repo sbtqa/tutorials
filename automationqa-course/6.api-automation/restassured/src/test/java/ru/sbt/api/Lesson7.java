@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.IsNot.not;
-import static ru.sbt.api.EndPoints.manufactures;
+import static ru.sbt.api.endpoints.EndPoints.manufactures;
 
 
 /**
