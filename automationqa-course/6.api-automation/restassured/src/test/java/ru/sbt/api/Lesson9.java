@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.not;
 public class Lesson9 {
 
     @Test
-    public void extractCookiesAsMap() {
+    public void jsonPojoToBody() {
         Model[] model = new Model[3];
         model[0] = new Model(null, "Octavia");
         model[1] = new Model(null, "Fabia");
@@ -31,7 +31,6 @@ public class Lesson9 {
                 .body("id", not(isEmptyOrNullString()))
                 .and()
                 .extract().path("id");
-
     }
 
 }
