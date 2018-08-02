@@ -1,9 +1,5 @@
 package ru.sbt.api;
 
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -15,17 +11,7 @@ import static ru.sbt.api.endpoints.EndPoints.manufactures;
 /**
  * В данномм уроке показаны различные способы получения данных из ответа
  */
-public class Lesson7 {
-    @BeforeClass
-    public void prepare() {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 8080;
-
-        RestAssured.requestSpecification = new RequestSpecBuilder()
-                .setAccept(ContentType.JSON)
-                .setContentType(ContentType.JSON)
-                .build();
-    }
+public class Lesson7 extends RestAssuredConfig {
 
     @Test
     public void extractBodyAsString() {

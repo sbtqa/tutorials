@@ -8,12 +8,10 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 /**
- * В данном уроке выполняются все HTTP методы, обычно применяемые для CRUD операций.
- * Также рассматривается возможность передачи динамически сформированного параметра пути
- * и параметра запроса
+ * GPath
  */
 
-public class Lesson6 extends RestAssuredConfig {
+public class Lesson12 extends RestAssuredConfig {
     private static Integer id;
 
     @Test
