@@ -22,10 +22,13 @@ public class Lesson12 extends RestAssuredConfig {
 
     /**
      * Функция find применяется для поиска первого вхождения
+     * =~ - для применения регулярного выражения
+     *
      */
     @Test
     public void find () {
-        Map<String, ?> map = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}");
+//        Map<String, ?> map = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}");
+        Map<String, ?> map = get(EndPoints.manufactures).path("find { it.title =~ 'Toyota'}");
         System.out.println(map);
     }
 
@@ -36,6 +39,17 @@ public class Lesson12 extends RestAssuredConfig {
     public void findAll () {
         List list = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.findAll { it.averagePrice > 2_000_000 }.title");
         System.out.println(list);
+    }
+
+    /**
+     * Функция collect позволяет создать новую коллекцию из другой
+     */
+    @Test
+    public void collect () {
+        List toyotaCars = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.collect { it.title }");
+        List allCars = get(EndPoints.manufactures).path("collect { it.models }.collect { it.title }");
+        System.out.println(toyotaCars);
+        System.out.println(allCars);
     }
 
     /**
