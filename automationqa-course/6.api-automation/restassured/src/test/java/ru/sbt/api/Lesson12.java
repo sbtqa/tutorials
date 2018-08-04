@@ -17,7 +17,7 @@ import static io.restassured.config.JsonConfig.jsonConfig;
  * <p>
  * JsonPath для навигации и доступа к данным использует Groovy GPath синаксис.
  * Данный синаксис содержит функции find, findAll, max, min collect, и sum, которые принимают в качестве аргумента замыкание.
- * В функции замыкании (closure) для доступа к текущему значению документа используется специальная переменная - it
+ * В замыкании (closure) для доступа к текущему значению документа используется специальная переменная - it
  */
 
 public class Lesson12 extends RestAssuredConfig {
