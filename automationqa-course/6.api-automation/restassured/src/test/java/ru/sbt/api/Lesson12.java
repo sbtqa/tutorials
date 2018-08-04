@@ -39,7 +39,11 @@ public class Lesson12 extends RestAssuredConfig {
      */
     @Test
     public void findAll() {
-        List list = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.findAll { it.averagePrice > 2_000_000 }.title");
+//        List list = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.findAll { it.averagePrice > 2_000_000 }.title");
+
+        // для составления jsonPath выражения мы можем использовать плейсхолдеры
+        List list = get(EndPoints.manufactures)
+                .path("find { it.title == 'Toyota Motor Corporation'}.models.findAll { it.averagePrice > %s }.title", "2_000_000");
         System.out.println(list);
     }
 
@@ -67,6 +71,7 @@ public class Lesson12 extends RestAssuredConfig {
 
     /**
      * Функция sum - возвращает сумму всех значений из коллекции
+     * В REST-assured можно настроить формат возвращаемого числового значение, что может быть полезно при работе с большими числами
      */
     @Test
     public void sum() {
