@@ -1,12 +1,15 @@
 package ru.sbt.api;
 
+import io.restassured.path.json.config.JsonPathConfig;
 import org.testng.annotations.Test;
 import ru.sbt.api.endpoints.EndPoints;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.*;
+import static io.restassured.config.JsonConfig.jsonConfig;
 
 /**
  * Для доступа к данным тела ответа в REST-assured применяется встроенный языка запросов JsonPath.
@@ -23,10 +26,9 @@ public class Lesson12 extends RestAssuredConfig {
     /**
      * Функция find применяется для поиска первого вхождения
      * =~ - для применения регулярного выражения
-     *
      */
     @Test
-    public void find () {
+    public void find() {
 //        Map<String, ?> map = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}");
         Map<String, ?> map = get(EndPoints.manufactures).path("find { it.title =~ 'Toyota'}");
         System.out.println(map);
@@ -36,7 +38,7 @@ public class Lesson12 extends RestAssuredConfig {
      * Функция findAll позволяет собрать все данные удовлетворяющие условию
      */
     @Test
-    public void findAll () {
+    public void findAll() {
         List list = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.findAll { it.averagePrice > 2_000_000 }.title");
         System.out.println(list);
     }
@@ -45,7 +47,7 @@ public class Lesson12 extends RestAssuredConfig {
      * Функция collect позволяет создать новую коллекцию из другой
      */
     @Test
-    public void collect () {
+    public void collect() {
         List toyotaCars = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.collect { it.title }");
         List allCars = get(EndPoints.manufactures).path("collect { it.models }.collect { it.title }");
         System.out.println(toyotaCars);
@@ -61,5 +63,19 @@ public class Lesson12 extends RestAssuredConfig {
         String expensiveCar = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.max { it.averagePrice }.title");
         System.out.println(cheepCar);
         System.out.println(expensiveCar);
+    }
+
+    /**
+     * Функция sum - возвращает сумму всех значений из коллекции
+     */
+    @Test
+    public void sum() {
+//        Double sum = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.collect { it.averagePrice }.sum()");
+        BigDecimal sum = given()
+                .config(config()
+                        .jsonConfig(jsonConfig().numberReturnType(JsonPathConfig.NumberReturnType.BIG_DECIMAL)))
+                .get(EndPoints.manufactures)
+                .path("find { it.title == 'Toyota Motor Corporation'}.models.collect { it.averagePrice }.sum()");
+        System.out.println(sum);
     }
 }
