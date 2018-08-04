@@ -1,13 +1,18 @@
 package ru.sbt.api.pojo;
 
+import java.math.BigDecimal;
+
 public class Model {
     private String id;
 
     private String title;
 
-    public Model(String id, String title) {
+    private BigDecimal averagePrice;
+
+    public Model(String id, String title, BigDecimal averagePrice) {
         this.id = id;
         this.title = title;
+        this.averagePrice = averagePrice;
     }
 
     public String getId() {
@@ -26,8 +31,20 @@ public class Model {
         this.title = title;
     }
 
+    public BigDecimal getAveragePrice() {
+        return averagePrice;
+    }
+
+    public void setAveragePrice(BigDecimal averagePrice) {
+        this.averagePrice = averagePrice;
+    }
+
     @Override
     public String toString() {
-        return "ClassPojo [id = " + id + ", title = " + title + "]";
+        return "Model{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", averagePrice=" + averagePrice +
+                '}';
     }
 }

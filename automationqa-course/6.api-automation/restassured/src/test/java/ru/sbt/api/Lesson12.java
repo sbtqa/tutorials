@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.get;
 public class Lesson12 extends RestAssuredConfig {
 
     @Test
-    public void find() {
+    public void find () {
         Map<String, ?> map = get(EndPoints.manufactures).path("find { it.id == 7}");
         System.out.println(map);
     }

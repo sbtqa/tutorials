@@ -38,7 +38,7 @@ public class Lesson6 extends RestAssuredConfig {
     public void getAll() {
         given()
                 .when().get(EndPoints.manufactures)
-                .then().body("size()", is(3)); // проверяем количество элементов от корневого элемента
+                .then().log().all().body("size()", is(3)); // проверяем количество элементов от корневого элемента
     }
 
     @Test(priority = 2)
@@ -47,7 +47,8 @@ public class Lesson6 extends RestAssuredConfig {
                 "  \"country\": \"Russia\"," +
                 "  \"models\": [" +
                 "    {" +
-                "      \"title\": \"Vesta Cross\"" +
+                "      \"title\": \"Vesta Cross\"," +
+                "      \"averagePrice\": \"600000\"" +
                 "    }" +
                 "  ]," +
                 "  \"title\": \"Lada\"" +
@@ -67,17 +68,20 @@ public class Lesson6 extends RestAssuredConfig {
 
     @Test(priority = 3)
     public void update() {
-        String updateElement = "{" +
-                "  \"country\": \"Russia\"," +
+        String updateElement = "{\n" +
+                "  \"country\": \"Russia\",\n" +
                 "  \"id\": " + id + "," +
-                "  \"models\": [" +
-                "    {" +
-                "      \"title\": \"Vesta Cross\"," +
-                "      \"title\": \"Kalina\"," +
-                "      \"title\": \"Niva 4x4\"" +
-                "    }" +
-                "  ]," +
-                "  \"title\": \"Lada\"" +
+                "  \"models\": [\n" +
+                "    {\n" +
+                "      \"averagePrice\": 600000,\n" +
+                "      \"title\": \"Vesta Cross\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"averagePrice\": 400000,\n" +
+                "      \"title\": \"Niva 4x4\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"title\": \"Lada\"\n" +
                 "}";
 
         RestAssured.responseSpecification = null; // сбросить проверку expected status

@@ -6,6 +6,8 @@ import ru.sbt.api.endpoints.EndPoints;
 import ru.sbt.api.pojo.Manufacturer;
 import ru.sbt.api.pojo.Model;
 
+import java.math.BigDecimal;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
@@ -20,9 +22,9 @@ public class Lesson9 extends RestAssuredConfig {
         RestAssured.responseSpecification = null;
 
         Model[] model = new Model[3];
-        model[0] = new Model(null, "Octavia");
-        model[1] = new Model(null, "Fabia");
-        model[2] = new Model(null, "Rapid");
+        model[0] = new Model(null, "Octavia", new BigDecimal(1_300_000));
+        model[1] = new Model(null, "Fabia", new BigDecimal(800_000));
+        model[2] = new Model(null, "Rapid", new BigDecimal(750_000));
         Manufacturer manufacturer = new Manufacturer(null, model, "Škoda Auto", "Czech Republic");
 
         given().body(manufacturer)
