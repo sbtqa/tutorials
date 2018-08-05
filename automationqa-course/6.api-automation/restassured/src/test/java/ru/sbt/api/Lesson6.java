@@ -1,12 +1,8 @@
 package ru.sbt.api;
 
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.http.ContentType;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ru.sbt.api.endpoints.EndPoints;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -14,34 +10,20 @@ import static org.hamcrest.Matchers.*;
 /**
  * В данном уроке выполняются все HTTP методы, обычно применяемые для CRUD операций.
  * Также рассматривается возможность передачи динамически сформированного параметра пути
+ * и параметра запроса
  */
 
-public class Lesson6 {
+public class Lesson6 extends RestAssuredConfig {
     private static Integer id;
-
-    @BeforeClass
-    public void prepare() {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 8080;
-        RestAssured.basePath = "car";
-
-        RestAssured.requestSpecification = new RequestSpecBuilder()
-                .setAccept(ContentType.JSON)
-                .setContentType(ContentType.JSON)
-                .log(LogDetail.ALL)
-                .build();
-
-        RestAssured.responseSpecification = new ResponseSpecBuilder()
-                .expectStatusCode(200)
-                .build();
-    }
 
     @Test
     public void getByPathParam() {
         given()
 //                .pathParam("id", 1)
                 .when().get(EndPoints.manufacture, 1)
-                .then().log().all().and().body("title", is("Mazda"));
+                .then().log().all()
+                .and()
+                .body("title", is("Mazda")); //проверка тела ответа
     }
 
     @Test
@@ -56,7 +38,7 @@ public class Lesson6 {
     public void getAll() {
         given()
                 .when().get(EndPoints.manufactures)
-                .then().body("size()", is(3)); // проверяем количество элементов от корневого элемента
+                .then().log().all().body("size()", is(3)); // проверяем количество элементов от корневого элемента
     }
 
     @Test(priority = 2)
@@ -65,7 +47,8 @@ public class Lesson6 {
                 "  \"country\": \"Russia\"," +
                 "  \"models\": [" +
                 "    {" +
-                "      \"title\": \"Vesta Cross\"" +
+                "      \"title\": \"Vesta Cross\"," +
+                "      \"averagePrice\": \"600000\"" +
                 "    }" +
                 "  ]," +
                 "  \"title\": \"Lada\"" +
@@ -85,20 +68,23 @@ public class Lesson6 {
 
     @Test(priority = 3)
     public void update() {
-        String updateElement = "{" +
-                "  \"country\": \"Russia\"," +
+        String updateElement = "{\n" +
+                "  \"country\": \"Russia\",\n" +
                 "  \"id\": " + id + "," +
-                "  \"models\": [" +
-                "    {" +
-                "      \"title\": \"Vesta Cross\"," +
-                "      \"title\": \"Kalina\"," +
-                "      \"title\": \"Niva 4x4\"" +
-                "    }" +
-                "  ]," +
-                "  \"title\": \"Lada\"" +
+                "  \"models\": [\n" +
+                "    {\n" +
+                "      \"averagePrice\": 600000,\n" +
+                "      \"title\": \"Vesta Cross\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"averagePrice\": 400000,\n" +
+                "      \"title\": \"Niva 4x4\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"title\": \"Lada\"\n" +
                 "}";
 
-        RestAssured.responseSpecification = null;
+        RestAssured.responseSpecification = null; // сбросить проверку expected status
 
         given().body(updateElement)
                 .when().put(EndPoints.manufactures)

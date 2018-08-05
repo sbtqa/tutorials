@@ -19,10 +19,18 @@ import static org.hamcrest.Matchers.isOneOf;
  * ifError() - логировать ответ если код ответа >=400
  * ifStatusCodeIsEqualTo(int) - логировать ответ если статус код равен, переданному через аргумент коду
  * ifStatusCodeMatches(Matcher<Integer>) - логировать ответ, если статус код удовлетворяет переданному через аргумент матчеру
+ *
+ * Примечание: логирование осуществляется до вызова HTTP Client'а, который может добавить свои данные в запрос.
+ * Для более детального анализа лога необходимо настроить логер для логированиея HTTP Client'a
+ * (<a href="http://hc.apache.org/httpcomponents-client-ga/logging.html">HTTP Client logging docs</a>) или воспользоваться снифером HTTP-трафика
  */
 public class Lesson2 {
     @Test
     public void test() {
+
+//  глобальная настройка логирования:
+//        RestAssured.config().logConfig(LogConfig.logConfig().enableLoggingOfRequestAndResponseIfValidationFails());
+
 //        given()
 //                .when().get("http://localhost:8080/car/manufacturers/1")
 //                .then().statusCode(200).log().all();

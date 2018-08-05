@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -21,6 +22,9 @@ public class Model {
 
     @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
+    private BigDecimal averagePrice;
 }
 
 
