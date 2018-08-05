@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>sbt.pitest.show.project</groupId>
+    <artifactId>show-pitest</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-parent</artifactId>
+            <version>1.3.1</version>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.2.2</version>
+                <configuration>
+                    <targetClasses>
+                        <param>utils.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>testPalindrome.*</param>
+                    </targetTests>
+                    <mutators>
+                        <mutator>CONSTRUCTOR_CALLS</mutator>
+                        <mutator>VOID_METHOD_CALLS</mutator>
+                        <mutator>RETURN_VALS</mutator>
+                        <mutator>NON_VOID_METHOD_CALLS</mutator>
+                    </mutators>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
