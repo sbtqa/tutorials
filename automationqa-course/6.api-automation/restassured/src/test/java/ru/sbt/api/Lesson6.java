@@ -38,7 +38,7 @@ public class Lesson6 extends RestAssuredConfig {
     public void getAll() {
         given()
                 .when().get(EndPoints.manufactures)
-                .then().log().all().body("size()", is(3)); // проверяем количество элементов от корневого элемента
+                .then().log().all().body("manufacturers.size()", is(3)); // проверяем количество элементов от корневого элемента
     }
 
     @Test(priority = 2)
@@ -97,7 +97,7 @@ public class Lesson6 extends RestAssuredConfig {
     @Test(priority = 4)
     public void delete() {
         given()
-                .when().delete(EndPoints.manufacture, 1)
+                .when().delete(EndPoints.manufacture, id)
                 .then().body(is("{success}"));
     }
 }

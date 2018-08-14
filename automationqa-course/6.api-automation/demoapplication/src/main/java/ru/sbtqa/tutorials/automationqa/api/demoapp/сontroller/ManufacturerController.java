@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sbtqa.tutorials.automationqa.api.demoapp.model.Manufacturer;
+import ru.sbtqa.tutorials.automationqa.api.demoapp.model.ManufacturerList;
 import ru.sbtqa.tutorials.automationqa.api.demoapp.service.ManufacturerService;
 
 @RestController
@@ -38,7 +39,7 @@ public class ManufacturerController {
         if (id != null) {
             return manufacturerService.getById(id);
         }
-        return manufacturerService.getAll();
+        return new ManufacturerList(manufacturerService.getAll());
     }
 
     @RequestMapping(

@@ -29,8 +29,8 @@ public class Lesson12 extends RestAssuredConfig {
      */
     @Test
     public void find() {
-//        Map<String, ?> map = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}");
-        Map<String, ?> map = get(EndPoints.manufactures).path("find { it.title =~ 'Toyota'}");
+//        Map<String, ?> map = get(EndPoints.manufactures).path("manufacturers.find { it.title == 'Toyota Motor Corporation'}");
+        Map<String, ?> map = get(EndPoints.manufactures).path("manufacturers.find { it.title =~ 'Toyota'}");
         System.out.println(map);
     }
 
@@ -39,11 +39,11 @@ public class Lesson12 extends RestAssuredConfig {
      */
     @Test
     public void findAll() {
-//        List list = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.findAll { it.averagePrice > 2_000_000 }.title");
+//        List list = get(EndPoints.manufactures).path("manufacturers.find { it.title == 'Toyota Motor Corporation'}.models.findAll { it.averagePrice > 2_000_000 }.title");
 
         // для составления jsonPath выражения мы можем использовать плейсхолдеры
         List list = get(EndPoints.manufactures)
-                .path("find { it.title == 'Toyota Motor Corporation'}.models.findAll { it.averagePrice > %s }.title", "2_000_000");
+                .path("manufacturers.find { it.title == 'Toyota Motor Corporation'}.models.findAll { it.averagePrice > %s }.title", "2_000_000");
         System.out.println(list);
     }
 
@@ -52,8 +52,8 @@ public class Lesson12 extends RestAssuredConfig {
      */
     @Test
     public void collect() {
-        List toyotaCars = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.collect { it.title }");
-        List allCars = get(EndPoints.manufactures).path("collect { it.models }.collect { it.title }");
+        List toyotaCars = get(EndPoints.manufactures).path("manufacturers.find { it.title == 'Toyota Motor Corporation'}.models.collect { it.title }");
+        List allCars = get(EndPoints.manufactures).path("manufacturers.collect { it.models }.collect { it.title }");
         System.out.println(toyotaCars);
         System.out.println(allCars);
     }
@@ -63,8 +63,8 @@ public class Lesson12 extends RestAssuredConfig {
      */
     @Test
     public void minAndMax() {
-        String cheepCar = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.min { it.averagePrice }.title");
-        String expensiveCar = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.max { it.averagePrice }.title");
+        String cheepCar = get(EndPoints.manufactures).path("manufacturers.find { it.title == 'Toyota Motor Corporation'}.models.min { it.averagePrice }.title");
+        String expensiveCar = get(EndPoints.manufactures).path("manufacturers.find { it.title == 'Toyota Motor Corporation'}.models.max { it.averagePrice }.title");
         System.out.println(cheepCar);
         System.out.println(expensiveCar);
     }
@@ -75,12 +75,12 @@ public class Lesson12 extends RestAssuredConfig {
      */
     @Test
     public void sum() {
-//        Double sum = get(EndPoints.manufactures).path("find { it.title == 'Toyota Motor Corporation'}.models.collect { it.averagePrice }.sum()");
+//        Double sum = get(EndPoints.manufactures).path("manufacturers.find { it.title == 'Toyota Motor Corporation'}.models.collect { it.averagePrice }.sum()");
         BigDecimal sum = given()
                 .config(config()
                         .jsonConfig(jsonConfig().numberReturnType(JsonPathConfig.NumberReturnType.BIG_DECIMAL)))
                 .get(EndPoints.manufactures)
-                .path("find { it.title == 'Toyota Motor Corporation'}.models.collect { it.averagePrice }.sum()");
+                .path("manufacturers.find { it.title == 'Toyota Motor Corporation'}.models.collect { it.averagePrice }.sum()");
         System.out.println(sum);
     }
 }
