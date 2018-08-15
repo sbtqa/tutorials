@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 import java.util.stream.IntStream;
 
+import static java.util.Arrays.*;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -198,7 +199,7 @@ class CoreMatchersTest {
      */
     @Test
     void singleElementShouldBeInCollection() {
-        List<String> collection = Arrays.asList("Артем", "Ольга", "Анатолий");
+        List<String> collection = asList("Артем", "Ольга", "Анатолий");
         assertThat("Коллекция не содержит требуемое значение", collection, hasItem("Артем"));
         assertThat("Коллекция содержит требуемое значение", collection, not(hasItem("Дмитрий")));
     }
@@ -208,7 +209,7 @@ class CoreMatchersTest {
      */
     @Test
     void multipleElementShouldBeInCollection() {
-        List<String> collection = Arrays.asList("Артем", "Ольга", "Анатолий");
+        List<String> collection = asList("Артем", "Ольга", "Анатолий");
         assertThat("Коллекция не содержит требуемое значение", collection,
                 hasItems("Анатолий", "Ольга"));
     }
@@ -218,7 +219,7 @@ class CoreMatchersTest {
      */
     @Test
     void multipleElementWithStrictOrder() {
-        List<String> collection = Arrays.asList("Дмитрий", "Роман", "Давлет");
+        List<String> collection = asList("Дмитрий", "Роман", "Давлет");
         assertThat(collection, contains("Дмитрий", "Роман", "Давлет"));
     }
 
@@ -228,7 +229,7 @@ class CoreMatchersTest {
      */
     @Test
     void multipleElementWithAnyOrderButAll() {
-        List<String> collection = Arrays.asList("Дмитрий", "Роман", "Давлет");
+        List<String> collection = asList("Дмитрий", "Роман", "Давлет");
         assertThat(collection, containsInAnyOrder("Роман", "Дмитрий"));
     }
 
@@ -246,7 +247,7 @@ class CoreMatchersTest {
      */
     @Test
     void listWithSpecialElementShouldHaveSpecialSize() {
-        List<String> collection = Arrays.asList("Allure", "Kotlin", "Appium");
+        List<String> collection = asList("Allure", "Kotlin", "Appium");
         assertThat(collection, hasSize(3));
     }
 
@@ -256,7 +257,7 @@ class CoreMatchersTest {
      */
     @Test
     void everyElementShouldBeGreaterSpecialNumber() {
-        List<Integer> collection = Arrays.asList(150, 201, 11, 5);
+        List<Integer> collection = asList(150, 201, 11, 5);
         assertThat(collection, everyItem(greaterThan(10)));
     }
 
@@ -268,7 +269,7 @@ class CoreMatchersTest {
         Map<String, String> map = new HashMap<>();
         map.put("Артем", "30");
         map.put("Ольга", "25");
-        map.put("Анатолий", "32");
+        map.put("Анатолий", "33");
         assertThat(map, hasKey("Ольга"));
     }
 
@@ -292,6 +293,53 @@ class CoreMatchersTest {
         assertThat(map, hasEntry("Artem", "Sokovets"));
     }
 
+
+    /* =====================================
+     * МАТЧЕРЫ ДЛЯ РАБОТЫ СО СТРОКАМИ
+     * =====================================
+     */
+
+    /**
+     * Матчер stringContainsInOrder проверяет, что тестируемая строка, содержит последовательность подстрок.
+     */
+    @Test
+    void stringShouldHaveSpecialSubString() {
+        assertThat("xUnit is't test framework", stringContainsInOrder(asList("x", "test", "framework")));
+    }
+
+    /**
+     * Матчер isEmptyString проверяет, что строка пустая
+     * Матчер isEmptyOrNullString проверяет, что строка null или пустая
+     */
+    @Test
+    void stringShouldBeEmpty() {
+        assertThat("", isEmptyString());
+        assertThat(null, isEmptyOrNullString());
+    }
+
+    /**
+     * Матчер containsString проверяет, что тестируемая строка содержит подстроку
+     * Матчер startsWith проверяет, что строка начинается с определеной подстроки
+     * Матчер endsWith проверяет, что строка заканчивается определенной подстрокой
+     */
+    @Test
+    void textShouldBeWithSpecialString() {
+        String text = "Kotlin Apppium Android";
+        assertThat(text, containsString("Apppium"));
+        assertThat(text, startsWith("Kotlin"));
+        assertThat(text, endsWith("Android"));
+    }
+
+    /**
+     * Матчер equalToIgnoringCase проверяет строки, игнорируя заглавные буквы
+     * Матчер equalToIgnoringWhiteSpace проверяет строки, игнорирую пробелы сначала строки,
+     * конца строки и модицифирует все пробелы среди строк до одного пробела.
+     */
+    @Test
+    void textShouldBeEquals() {
+        assertThat("Charlies Angels", equalToIgnoringCase("charlies angels"));
+        assertThat("charlies  angels        ", equalToIgnoringWhiteSpace(" charlies  angels   "));
+    }
 
 }
 
