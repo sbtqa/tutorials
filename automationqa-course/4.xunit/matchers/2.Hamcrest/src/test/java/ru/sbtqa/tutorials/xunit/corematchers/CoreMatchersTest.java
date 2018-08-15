@@ -3,6 +3,7 @@ package ru.sbtqa.tutorials.xunit.corematchers;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -231,6 +232,34 @@ class CoreMatchersTest {
     void multipleElementWithAnyOrderButAll() {
         List<String> collection = Arrays.asList("Дмитрий", "Роман", "Давлет");
         assertThat(collection, containsInAnyOrder("Роман", "Дмитрий"));
+    }
+
+    /**
+     * Матчер empty проверяет, что в проверяемой коллекции нет элементов.
+     */
+    @Test
+    void collectionShouldBeEmpty() {
+        List<String> collection = Collections.emptyList();
+        assertThat("Коллекция не пустая", collection, empty());
+    }
+
+    /**
+     * Матчер hasSize проверяет, что в проверяемой коллекции содержится определенное число элементов
+     */
+    @Test
+    void listWithSpecialElementShouldHaveSpecialSize() {
+        List<String> collection = Arrays.asList("Allure", "Kotlin", "Appium");
+        assertThat(collection, hasSize(3));
+    }
+
+    /**
+     * Синтаксический матчер everyItem перебирает каждый элемент коллекции и выполняет заданную проверку.
+     * Матчер greaterThan - сравнивает элемент с заданным числом.
+     */
+    @Test
+    void everyElementShouldBeGreaterSpecialNumber() {
+        List<Integer> collection = Arrays.asList(150, 201, 11, 5);
+        assertThat(collection, everyItem(greaterThan(10)));
     }
 
 }
