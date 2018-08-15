@@ -1,63 +1,48 @@
 {
-  "$id": "http://example.com/example.json",
-  "type": "array",
-  "definitions": {},
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "items": {
-    "$id": "http://example.com/example.json/items",
-    "type": "object",
-    "properties": {
-      "id": {
-        "$id": "http://example.com/example.json/items/properties/id",
-        "type": "integer",
-        "title": "The Id Schema ",
-        "default": 0,
-        "examples": [
-          1
-        ]
-      },
-      "title": {
-        "$id": "http://example.com/example.json/items/properties/title",
-        "type": "string",
-        "title": "The Title Schema ",
-        "default": "",
-        "examples": [
-          "Mazda"
-        ]
-      },
-      "country": {
-        "$id": "http://example.com/example.json/items/properties/country",
-        "type": "string",
-        "title": "The Country Schema ",
-        "default": "",
-        "examples": [
-          "Japan"
-        ]
-      },
-      "models": {
-        "$id": "http://example.com/example.json/items/properties/models",
-        "type": "array",
-        "items": {
-          "$id": "http://example.com/example.json/items/properties/models/items",
-          "type": "object",
-          "properties": {
-            "id": {
-              "$id": "http://example.com/example.json/items/properties/models/items/properties/id",
-              "type": "integer",
-              "title": "The Id Schema ",
-              "default": 0,
-              "examples": [
-                2
-              ]
-            },
-            "title": {
-              "$id": "http://example.com/example.json/items/properties/models/items/properties/title",
-              "type": "string",
-              "title": "The Title Schema ",
-              "default": "",
-              "examples": [
-                "3"
-              ]
+  "type": "object",
+  "required": [
+    "manufacturers"
+  ],
+  "properties": {
+    "manufacturers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "country"
+        ],
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "title",
+                "averagePrice"
+              ],
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "averagePrice": {
+                  "type": "number"
+                }
+              }
             }
           }
         }
