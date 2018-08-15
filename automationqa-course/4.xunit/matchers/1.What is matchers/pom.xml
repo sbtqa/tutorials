@@ -30,7 +30,6 @@
             </plugin>
         </plugins>
     </build>
-
     <dependencies>
         <dependency>
             <!-- Добавление JUnit 5 для использования в тестах -->
@@ -44,6 +43,7 @@
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
             <version>LATEST</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
