@@ -273,6 +273,16 @@ class CoreMatchersTest {
     }
 
     /**
+     * Матчер hasValue проверяет, что в map есть элемент с заданным значением
+     */
+    @Test
+    void mapShouldHaveSpecialValue() {
+        Map<String, String> map = new HashMap<>();
+        map.put("Kotlin", "1.2.60");
+        assertThat(map, hasValue("1.2.60"));
+    }
+
+    /**
      * Матчер hasEntry проверяет, что в map есть заданный элемент с ключем и значением
      */
     @Test
@@ -281,6 +291,7 @@ class CoreMatchersTest {
         map.put("Artem", "Sokovets");
         assertThat(map, hasEntry("Artem", "Sokovets"));
     }
+
 
 }
 
