@@ -2,9 +2,7 @@ package ru.sbtqa.tutorials.xunit.corematchers;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -66,7 +64,7 @@ class CoreMatchersTest {
      */
     @Test
     void shouldWorkHamcrestMatcherEither() {
-        assertThat( efsName, either(not(equalTo(""))).or(is(equalToIgnoringCase(""))));
+        assertThat(efsName, either(not(equalTo(""))).or(is(equalToIgnoringCase(""))));
     }
 
 
@@ -174,7 +172,7 @@ class CoreMatchersTest {
      * Матчер greaterThan, проверяем, что 100 больше, чем 18
      */
     @Test
-    void shouldWorkGreaterThan () {
+    void shouldWorkGreaterThan() {
         assertThat(100, greaterThan(18));
     }
 
@@ -183,7 +181,7 @@ class CoreMatchersTest {
      * В текущем примере работаем со списком - используем матчер everyItem для обработки каждого значения списка
      */
     @Test
-    void shouldWorkEveryItemInListGreaterThanOrEqualToNumber () {
+    void shouldWorkEveryItemInListGreaterThanOrEqualToNumber() {
         IntStream ages = IntStream.of(21, 25, 30, 18);
         assertThat(ages.boxed().collect(toList()), everyItem(greaterThanOrEqualTo(18)));
     }
@@ -260,6 +258,28 @@ class CoreMatchersTest {
     void everyElementShouldBeGreaterSpecialNumber() {
         List<Integer> collection = Arrays.asList(150, 201, 11, 5);
         assertThat(collection, everyItem(greaterThan(10)));
+    }
+
+    /**
+     * Матчер hasKey проверяет, что в map есть элемент с заданным ключем
+     */
+    @Test
+    void mapShouldHaveSpecialKey() {
+        Map<String, String> map = new HashMap<>();
+        map.put("Артем", "30");
+        map.put("Ольга", "25");
+        map.put("Анатолий", "32");
+        assertThat(map, hasKey("Ольга"));
+    }
+
+    /**
+     * Матчер hasEntry проверяет, что в map есть заданный элемент с ключем и значением
+     */
+    @Test
+    void mapShouldHaveSpecialEntry() {
+        Map<String, String> map = new HashMap<>();
+        map.put("Artem", "Sokovets");
+        assertThat(map, hasEntry("Artem", "Sokovets"));
     }
 
 }
