@@ -2,6 +2,8 @@ package ru.sbtqa.tutorials.xunit.corematchers;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -63,7 +65,7 @@ class CoreMatchersTest {
      */
     @Test
     void shouldWorkHamcrestMatcherEither() {
-        assertThat(efsName, either(not(equalTo(""))).or(is(equalToIgnoringCase(""))));
+        assertThat( efsName, either(not(equalTo(""))).or(is(equalToIgnoringCase(""))));
     }
 
 
@@ -183,6 +185,52 @@ class CoreMatchersTest {
     void shouldWorkEveryItemInListGreaterThanOrEqualToNumber () {
         IntStream ages = IntStream.of(21, 25, 30, 18);
         assertThat(ages.boxed().collect(toList()), everyItem(greaterThanOrEqualTo(18)));
+    }
+
+
+    /* =====================================
+     * МАТЧЕРЫ ДЛЯ РАБОТЫ С КОЛЛЕКЦИЯМИ
+     * =====================================
+     */
+
+    /**
+     * Матчер hasItem проверяет, что в проверяемой коллекции содержится требуемый элемент.
+     * Так же в данном примере используется синтаксический матчер not
+     */
+    @Test
+    void singleElementShouldBeInCollection() {
+        List<String> collection = Arrays.asList("Артем", "Ольга", "Анатолий");
+        assertThat("Коллекция не содержит требуемое значение", collection, hasItem("Артем"));
+        assertThat("Коллекция содержит требуемое значение", collection, not(hasItem("Дмитрий")));
+    }
+
+    /**
+     * Матчер hasItems проверяет, что в проверяемой коллекции содержятся требуемые элементы.
+     */
+    @Test
+    void multipleElementShouldBeInCollection() {
+        List<String> collection = Arrays.asList("Артем", "Ольга", "Анатолий");
+        assertThat("Коллекция не содержит требуемое значение", collection,
+                hasItems("Анатолий", "Ольга"));
+    }
+
+    /**
+     * Матчер contains проверяет, что в проверяемой коллекции содержятся требуемые элементы в заданном порядке
+     */
+    @Test
+    void multipleElementWithStrictOrder() {
+        List<String> collection = Arrays.asList("Дмитрий", "Роман", "Давлет");
+        assertThat(collection, contains("Дмитрий", "Роман", "Давлет"));
+    }
+
+    /**
+     * Матчер containsInAnyOrder проверяет, что в проверяемой коллекции содержатся требуемые элементы.
+     * Требуются, чтобы присутствовали все элементы
+     */
+    @Test
+    void multipleElementWithAnyOrderButAll() {
+        List<String> collection = Arrays.asList("Дмитрий", "Роман", "Давлет");
+        assertThat(collection, containsInAnyOrder("Роман", "Дмитрий"));
     }
 
 }
