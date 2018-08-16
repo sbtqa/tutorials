@@ -127,33 +127,6 @@ class CoreMatchersTest {
         assertThat(pojoBean1, samePropertyValuesAs(pojoBean2));
     }
 
-    public class PojoBean {
-        private String name;
-        private Integer age;
-
-        PojoBean(String name, Integer age) {
-            this.name = name;
-            this.age = age;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Integer getAge() {
-            return age;
-        }
-
-        public void setAge(Integer age) {
-            this.age = age;
-        }
-    }
-
-
 
     /* =====================================
      * МАТЧЕРЫ ДЛЯ РАБОТЫ С ЧИСЛАМИ
@@ -341,6 +314,103 @@ class CoreMatchersTest {
         assertThat("charlies  angels        ", equalToIgnoringWhiteSpace(" charlies  angels   "));
     }
 
+    /* =====================================
+     * МАТЧЕРЫ ДЛЯ РАБОТЫ С ОБЪЕКТАМИ
+     * =====================================
+     */
+
+    /**
+     * Матчер hasToString проверяет, что тестируемый объект содержит toString метод и возвращает верную сформированную строку
+     *
+     */
+    @Test
+    void pojoBeanShouldHaveCorrectToStringMethod() {
+        PojoBean pojoBean = new PojoBean("Vadim", 41);
+        assertThat(pojoBean, hasToString("[Name: Vadim, Age: 41]"));
+    }
+
+
+    /**
+     * Матчер instanceOf проверяет, что тестируемый объект является нужным типом заданного класса
+     */
+    @Test
+    void pojoBeanShouldHaveRightType() {
+        PojoBean pojoBean = new PojoBean("Mark", 23);
+        assertThat(pojoBean.getClass(), is(instanceOf(PojoBean.class)));
+    }
+
+    /**
+     * Матчер typeCompatibleWith проверяет, что тестируемый объект является нужным типом/подтипом заданного класса
+     */
+    @Test
+    void pojoBeanShouldHaveCompatibleType() {
+        PojoBeanExtend pojoBeanExtend = new PojoBeanExtend("Mark", 23);
+        assertThat(pojoBeanExtend.getClass(), is(typeCompatibleWith(PojoBean.class)));
+    }
+
+    /**
+     * Матчер nullValue проверяет, что тестируемый объект null
+     */
+    @Test
+    void pojoBeanShouldBeNull() {
+        PojoBean pojoBean = null;
+        assertThat("Объетк не null", pojoBean, is(nullValue()));
+    }
+
+    /**
+     *  Для демонстрации примеров
+     */
+    public static class PojoBean {
+        private String name;
+        private Integer age;
+
+        PojoBean(String name, Integer age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+
+        @Override
+        public String toString() {
+            if (this.name == null && this.age == null) {
+                return null;
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.append("[");
+            sb.append("Name: ");
+            sb.append(this.name);
+            sb.append(", ");
+            sb.append("Age: ");
+            sb.append(this.age);
+            sb.append("]");
+            return sb.toString();
+        }
+    }
+
+    /**
+     *  Для демонстрации примеров
+     */
+    public class PojoBeanExtend extends PojoBean {
+
+        PojoBeanExtend(String name, Integer age) {
+            super(name, age);
+        }
+    }
 }
 
 
