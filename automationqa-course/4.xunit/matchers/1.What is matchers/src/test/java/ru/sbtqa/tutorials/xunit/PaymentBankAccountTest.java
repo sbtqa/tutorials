@@ -26,23 +26,27 @@ class PaymentBankAccountTest {
     /**
      * Использование в тесте методов проверок из класса Assertions (Junit 5). Также используем метод assertTrue из
      * класса org.hamcrest.MatcherAssert
+     *
+     * Тест специально поломан, чтобы показать: первая проверка падает, другие НЕ проходят
      */
     @Test
     void shouldBeWithoutMatchersValidParamsOfPaymentBankAccount() {
         assertNotNull(paymentBankAccount, "Object is null");
-        assertEquals("Artem", paymentBankAccount.getFirstName(), "Имя не совпадает");
+        assertEquals("Артем", paymentBankAccount.getFirstName(), "Имя не совпадает");
         assertTrue("Sokovets".contains(paymentBankAccount.getLastName()), "Фамилия не совпадает");
         assertTrue(valueOf(1230000000L).equals(paymentBankAccount.getBalance()), "Баланс не совпадает");
     }
 
     /**
      * Использование в тесте готовых матчеров(notNullValue, equalTo, greaterThanOrEqualTo) библиотеки org.hamcrest.
+     *
+     * Тест специально поломан, чтобы показать: первая проверка падает, другие проходят
      */
     @Test
     void shouldWithMatchersBeValidParamsOfPaymentBankAccount() {
         assertThat(paymentBankAccount,
                 allOf(notNullValue(),
-                        hasProperty("firstName", equalTo("Artem")),
+                        hasProperty("firstName", equalTo("Артем")),
                         hasProperty("lastName", equalTo("Sokovets")),
                         hasProperty("balance", greaterThanOrEqualTo(valueOf(1230000000L)))));
     }
