@@ -48,7 +48,7 @@ class CoreMatchersTest {
      */
     @Test
     void shouldWorkHamcrestMatcherBoth() {
-        assertThat(efsName, both(startsWith("ЕФС")).and(instanceOf(String.class)));
+        assertThat(efsName, both(startsWith("ЕФС")).and(instanceOf(String.class)).and(startsWith("Е")));
     }
 
     /**
@@ -369,19 +369,19 @@ class CoreMatchersTest {
             this.age = age;
         }
 
-        public String getName() {
+        String getName() {
             return name;
         }
 
-        public void setName(String name) {
+        void setName(String name) {
             this.name = name;
         }
 
-        public Integer getAge() {
+        Integer getAge() {
             return age;
         }
 
-        public void setAge(Integer age) {
+        void setAge(Integer age) {
             this.age = age;
         }
 
