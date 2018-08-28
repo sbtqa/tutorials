@@ -8,7 +8,7 @@ _$ psql template1 -c 'create database pcdb with owner имя_пользоват�
 
 _$ psql pcdb < путь_до_бэкапа/pcdbbackup.sql_
 
-##Прочее
+
 изменить логин и пароль на свои в файле ProcessingcenterApplicationTests.java,
 
 _dataSource.setUsername("логин_постгрес");_
