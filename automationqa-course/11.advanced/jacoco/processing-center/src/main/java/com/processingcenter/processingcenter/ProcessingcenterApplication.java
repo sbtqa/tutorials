@@ -24,12 +24,6 @@ public class ProcessingcenterApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... strings) throws Exception {
-//		accountRepository.save(new Account("Tatyana", "Voteva", 31000));
-//		accountRepository.save(new Account("Andrey", "Sokolov", 19000));
-//		accountRepository.save(new Account("Gael", "Guedia", 150000));
-//		accountRepository.save(new Account("Petr", "Petrov", 4100000));
-// 		accountRepository.save(new Account("Oskar", "Guera", 31000));
-//		accountRepository.save(new Account("Petr", "Ivanov", 400));
-//		transactionRepository.save(new Transaction(1L, 2L, 100));
+
 	}
 }
