@@ -1,10 +1,10 @@
 ## До запуска приложения и тестов нужно восстановить базу данных Postgres из бэкапа следующей командой:
 
-###Для создания бд
+##Для создания бд
 
 _$ psql template1 -c 'create database pcdb with owner имя_пользователя_бд;'_  
  
-###Для восстановления бэкапа, находится в jacoco/processing-center/src/test/resources/pcdbbackup.sql
+##Для восстановления бэкапа, находится в jacoco/processing-center/src/test/resources/pcdbbackup.sql
 _$ psql pcdb < путь_до_бэкапа/pcdbbackup.sql_
 
 ## Запуск приложения, тестов и генерация отчета
