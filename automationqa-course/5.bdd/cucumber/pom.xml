@@ -7,6 +7,10 @@
     <groupId>ru.mystudy</groupId>
     <artifactId>cucumber</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -20,9 +24,9 @@
             <version>LATEST</version>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>io.cucumber</groupId>-->
-            <!--<artifactId>cucumber-testng</artifactId>-->
-            <!--<version>LATEST</version>-->
+        <!--<groupId>io.cucumber</groupId>-->
+        <!--<artifactId>cucumber-testng</artifactId>-->
+        <!--<version>LATEST</version>-->
         <!--</dependency>-->
     </dependencies>
 
