@@ -15,11 +15,6 @@
     <dependencies>
         <dependency>
             <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-expressions</artifactId>
-            <version>6.0.2-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>LATEST</version>
         </dependency>
