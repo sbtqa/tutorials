@@ -3,7 +3,7 @@ package ru.mystudy.stepdefs;
 import cucumber.api.java.ru.ƒано;
 import cucumber.api.java.ru. огда;
 
-public class firstStepDefinitions {
+public class FirstStepDefinitions {
     @ƒано("^на счете пользовател€ имеетс€ (\\d+) рублей$")
     public void на—четеѕользовател€»меетс€–ублей(int arg0) {
         System.out.println("на—четеѕользовател€»меетс€–ублей " + arg0);
