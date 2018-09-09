@@ -44,15 +44,4 @@ public class DefaultTypesStepDefinitions {
     public void передадим_в_метод_ассоциативный_массив(Map<String, String> dataTable) {
         System.out.println(dataTable);
     }
-
-    @AfterStep()
-    public void afterStep() {
-        System.out.println("afterstep");
-    }
-
-    @BeforeStep
-    public void beforeStep() {
-        System.out.println("beforestep");
-    }
-
 }
