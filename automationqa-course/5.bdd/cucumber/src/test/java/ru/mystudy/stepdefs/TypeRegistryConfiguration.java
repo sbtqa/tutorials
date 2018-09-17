@@ -12,6 +12,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+/**
+ *  Для возможности передачи из фичи в код шага объектов пользовательского типа необходимо добавить в Реестр Типов
+ *  соответствующий преобразователь.
+ *
+ *  Для этого в пакете, указанном в glue, необходимо создать класс, реализующий интерфейс TypeRegistryConfigurer,
+ *  и через него добавить свой тип данных в реестр.
+ *  Класс, реализующий интерфейс TypeRegistryConfigurer, в проекте должен быть один, иначе будет выброшено исключение.
+ *
+ */
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     @Override
     public Locale locale() {
