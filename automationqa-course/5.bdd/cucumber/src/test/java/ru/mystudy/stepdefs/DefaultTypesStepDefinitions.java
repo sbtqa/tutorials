@@ -1,9 +1,8 @@
 package ru.mystudy.stepdefs;
 
-import cucumber.api.java.AfterStep;
-import cucumber.api.java.BeforeStep;
 import cucumber.api.java.ru.Допустим;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -21,18 +20,33 @@ import java.util.Map;
  */
 public class DefaultTypesStepDefinitions {
     @Допустим("передадим в метод шага целое число {int}")
-    public void передадим_в_метод_шага_целое_число(Integer int1) {
+    public void giveInt(Integer int1) {
         System.out.println(int1);
     }
 
     @Допустим("передадим в метод шага {string}")
-    public void передадим_в_метод_шага(String string) {
+    public void giveString(String string) {
         System.out.println(string);
     }
 
     @Допустим("передадим в метод шага {word}")
-    public void передадим_в_метод_шага_слово(String string) {
+    public void giveWord(String string) {
         System.out.println(string);
+    }
+
+    @Допустим("передадим в метод шага BigInteger {biginteger}")
+    public void giveWord(BigInteger integer) {
+        System.out.println(integer);
+    }
+
+    @Допустим("Hello, world(s)!")
+    public void getHello() {
+        System.out.println("Hello world!");
+    }
+
+    @Допустим("основной/альтернативный текст")
+    public void getAlternative() {
+        System.out.println("Hello world!");
     }
 
     @Допустим("передадим в метод коллекцию строк")
