@@ -16,17 +16,17 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>LATEST</version>
+            <version>3.0.2</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>LATEST</version>
+            <version>3.0.2</version>
         </dependency>
         <!--<dependency>-->
         <!--<groupId>io.cucumber</groupId>-->
         <!--<artifactId>cucumber-testng</artifactId>-->
-        <!--<version>LATEST</version>-->
+        <!--<version>3.0.2</version>-->
         <!--</dependency>-->
     </dependencies>
 
