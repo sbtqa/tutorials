@@ -1,13 +1,13 @@
 package ru.mystudy.stepdefs;
 
-import cucumber.api.java.ru.Допустим;
+import cucumber.api.java.ru.Р”РѕРїСѓСЃС‚РёРј;
 import ru.mystudy.pojo.User;
 
 import java.util.List;
 
 public class CustomDataTableParameterTypeStepDefinitions {
-    @Допустим("у нас есть пользователи")
-    public void у_нас_есть_пользователи(List<User> users) {
+    @Р”РѕРїСѓСЃС‚РёРј("Сѓ РЅР°СЃ РµСЃС‚СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё")
+    public void Сѓ_РЅР°СЃ_РµСЃС‚СЊ_РїРѕР»СЊР·РѕРІР°С‚РµР»Рё(List<User> users) {
         System.out.println(users);
     }
 }

@@ -1,13 +1,13 @@
 package ru.mystudy.stepdefs;
 
-import cucumber.api.java.ru.Допустим;
+import cucumber.api.java.ru.Р”РѕРїСѓСЃС‚РёРј;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class CustomParameterTypeStepDefinitions {
-    @Допустим("передадим в метод дату {localdate}")
-    public void передадим_в_метод_дату(LocalDate localdate) {
+    @Р”РѕРїСѓСЃС‚РёРј("РїРµСЂРµРґР°РґРёРј РІ РјРµС‚РѕРґ РґР°С‚Сѓ {localdate}")
+    public void РїРµСЂРµРґР°РґРёРј_РІ_РјРµС‚РѕРґ_РґР°С‚Сѓ(LocalDate localdate) {
         System.out.println(localdate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
     }
 }
