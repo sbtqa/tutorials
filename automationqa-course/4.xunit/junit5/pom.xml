@@ -37,5 +37,19 @@
             <version>LATEST</version>
             <scope>test</scope>
         </dependency>
+        <!-- Подключаем Junit 4  -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Подключаем базовый компонент Vintage для запуска Junit 4 тестов с помощью Junit 5  -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>LATEST</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
