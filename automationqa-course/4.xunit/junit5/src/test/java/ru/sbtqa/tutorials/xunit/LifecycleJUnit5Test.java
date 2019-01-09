@@ -11,6 +11,7 @@ class LifecycleJUnit5Test {
     static void setUpAll() {
         System.out.println("Подготовка тестового окружения ПЕРЕД ВСЕМИ тестами");
     }
+
     @BeforeEach
     void setUp() {
         System.out.println("Подготовка тестового окружения ПЕРЕД КАЖДЫМ тестом");
@@ -32,6 +33,7 @@ class LifecycleJUnit5Test {
     void tearDown() {
         System.out.println("Освобождение ресурсов ПОСЛЕ КАЖДОГО теста");
     }
+
     @AfterAll
     static void tearDownAll() {
         System.out.println("Освобождение ресурсов ПОСЛЕ ВСЕХ тестов");
