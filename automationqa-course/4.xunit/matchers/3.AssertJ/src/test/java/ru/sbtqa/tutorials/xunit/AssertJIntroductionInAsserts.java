@@ -7,12 +7,12 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class AssertJBasicAsserts {
+public class AssertJIntroductionInAsserts {
 
     private static List<String> sovietCars = Arrays.asList("Volga", "Moskvitch", "Lada", "Zaporojets");
 
     @Test
-    public void basicAssertTest() {
+    public void assertJIntroductionInAssertsTest() {
         assertThat(sovietCars.get(0)).isEqualTo("Volga");
         assertThat(sovietCars.get(0)).isNotEqualTo("Mercedes");
 
