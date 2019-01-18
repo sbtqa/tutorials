@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Для проверки тестов с Tag("functional") и Tag("non-functional"), запустите тесты с профилем run-test-with-tags.
+ * Будут запущены, только тесты, так как non-functional отключены в pom.xml использую excludedGroups
+ */
 @Tag("non-functional")
 class NonFunctionalTest {
 
