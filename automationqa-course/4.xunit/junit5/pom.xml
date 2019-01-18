@@ -24,6 +24,12 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.0</version>
+                <configuration>
+                    <properties>
+                        <groups>functional</groups>
+                        <excludedGroups>non-functional</excludedGroups>
+                    </properties>
+                </configuration>
             </plugin>
         </plugins>
     </build>
