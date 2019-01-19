@@ -44,6 +44,23 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>run-test-with-meta-annotations</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.22.0</version>
+                        <configuration>
+                            <properties>
+                                <groups>load,stress</groups>
+                                <excludedGroups>functional</excludedGroups>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
     <properties>
         <hamcrest.version>LATEST</hamcrest.version>
