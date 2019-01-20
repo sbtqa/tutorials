@@ -7,6 +7,66 @@
     <artifactId>junit5</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>junit5-example</name>
+    <profiles>
+        <profile>
+            <id>run-test-with-tags</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.22.0</version>
+                        <configuration>
+                            <properties>
+                                <groups>functional</groups>
+                                <excludedGroups>non-functional</excludedGroups>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>run-test-with-maven-regular-support</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.22.0</version>
+                        <configuration>
+                            <includes>
+                                <include>**/tags/*Test.java</include>
+                            </includes>
+                            <excludes>
+                                <exclude>**/tags/NonFunctional*.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>run-test-with-meta-annotations</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.22.0</version>
+                        <configuration>
+                            <properties>
+                                <groups>load,stress</groups>
+                                <excludedGroups>functional</excludedGroups>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <properties>
+        <hamcrest.version>LATEST</hamcrest.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
     <developers>
         <developer>
             <id>artsok</id>
@@ -49,6 +109,13 @@
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>LATEST</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Подключаем библиотеку Hamcrest -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>${hamcrest.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
