@@ -20,7 +20,7 @@ public class AssertJObjectAsserts {
         assertThat(jack).isEqualToComparingFieldByField(anotherJack);
     }
 
-    public class Person {
+    private class Person {
         private String name;
         private int age;
 
